@@ -28,7 +28,7 @@ export function ProcessSection() {
   const capabilities = [
     'Bulk processing capacity',
     'Consistent quality standards',
-    'Flexible packaging options',
+    'Packing is in a gunny bag',
     'Timely delivery schedules',
     'Custom processing requirements',
     'Quality documentation'

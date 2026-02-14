@@ -28,9 +28,9 @@ export function AboutSection() {
     <section id="about" className="py-20 bg-white">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="mb-6 text-foreground">About Radha General Industry</h2>
+          <h2 className="mb-6 text-foreground">About Radha general industries</h2>
           <p className="text-lg text-foreground/75 leading-relaxed font-medium">
-            Located in the SIDCO Industrial Estate in Theni, Tamil Nadu, Radha General Industry is a dedicated manufacturer specializing in varagu (kodo millet) husk processing. We transform agricultural by-products into valuable materials for various industrial and agricultural applications.
+            Located in the SIDCO Industrial Estate in Theni, Tamil Nadu, Radha general industries is a dedicated manufacturer specializing in varagu (kodo millet) husk processing. We transform agricultural by-products into valuable materials for various industrial and agricultural applications.
           </p>
         </div>
 

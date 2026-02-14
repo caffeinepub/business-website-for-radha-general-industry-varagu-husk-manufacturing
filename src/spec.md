@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Add a new “Machinery” showcase within the existing Process section to highlight key husk-processing machines with improved, token-based colors while keeping the page background pure white.
+**Goal:** Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and calculation modes, and update the Tamil Nadu Hotel Rule UI/validation to reflect DA as a fixed amount (not a percentage).
 
 **Planned changes:**
-- Add a “Machinery” content block inside the existing Process section (no new route) with at least 3 items (dehusking/husk machine, separator/cleaner, packing machine), each with an English title and 1–2 sentence description.
-- Implement a responsive layout for the Machinery block (single column on mobile, multi-column grid on larger screens).
-- Apply “good color” styling using existing design tokens (primary/accent/card/border) for clear hierarchy within cards while preserving a pure white page background (no tinted/gray full-bleed section backgrounds or gradients).
-- Add and reference static machinery visuals from `frontend/public/assets/generated`, including appropriate English alt text.
+- Set DA to a constant value (8419) for all zones (A/B/C/D) and ensure all Salary Split Calculator computations always use this fixed DA in both Manual Entry and Tamil Nadu Hotel Rule modes.
+- Update Manual Entry mode so the DA field displays 8419 and is read-only/disabled; prevent any UI interaction from changing DA away from 8419 and ensure resets restore DA to 8419.
+- Update Tamil Nadu Hotel Rule configuration UI to remove or disable DA percentage input and revise any displayed formulas/help text to indicate DA is fixed at 8419.
+- Adjust Tamil Nadu Hotel Rule validation so it no longer requires or validates DA percentage totals when DA is fixed.
 
-**User-visible outcome:** The Process section now includes a clearly labeled, visually polished Machinery block showing three husk-processing machines with images, titles, and short descriptions that display well on both mobile and desktop.
+**User-visible outcome:** Users always see DA fixed at ₹8,419 and cannot edit it; salary breakdowns and rule-based calculations consistently use DA = 8419, and the TN Hotel Rule section no longer asks for DA as a percentage.

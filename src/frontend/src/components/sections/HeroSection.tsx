@@ -29,7 +29,7 @@ export function HeroSection() {
           </h1>
           
           <p className="text-xl md:text-2xl text-foreground/80 mb-8 leading-relaxed font-medium">
-            Radha general Industries specializes in processing high-quality kodo millet (varagu) husk for agricultural and industrial applications across Tamil Nadu.
+            Radha general industries specializes in processing high-quality kodo millet (varagu) husk for agricultural and industrial applications across Tamil Nadu.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-10">

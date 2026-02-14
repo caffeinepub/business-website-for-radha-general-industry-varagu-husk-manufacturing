@@ -1,24 +1,27 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T12:49:50.773Z",
-  "summary": "REQ-1 and most of REQ-2 appear implemented by adding a new MachineryBlock component and composing it into the existing Process section with a responsive grid and token-based styling on a white section background. REQ-3 cannot be verified because the diff summary does not show the required image files being added under frontend/public/assets/generated.",
-  "missing_requirements": [
+  "generatedAt": "2026-02-14T15:41:15.247Z",
+  "summary": "Diff largely implements fixed DA = 8419 in both Manual Entry and Tamil Nadu Hotel Rule modes, including UI messaging that DA is fixed and removal of DA-percentage configuration. However, the changes also appear to make Gross Salary fixed/immutable at 8419, which was not requested.",
+  "missing_requirements": [],
+  "hallucinated_features": [
     {
-      "id": "REQ-3",
-      "requirement": "Generate and add static machinery illustrations/photos under frontend/public/assets/generated and reference them directly from the Machinery block with English alt text.",
-      "reason": "The MachineryBlock references three image paths under /assets/generated, but the diff summary does not include any added image files in frontend/public/assets/generated (only a TSX component and a ProcessSection composition change are shown). Therefore, adding the required static assets cannot be confirmed and may cause missing-asset errors.",
+      "description": "Gross Salary is enforced as a fixed/immutable value of 8419 across zones/modes (not requested; request only fixed DA).",
+      "reason": "BuildRequest only requires DA to be fixed at 8419. Diff introduces constants and state initialization that fix gross salary to 8419 and sets gross salary in auto-calculation effects, implying gross salary can no longer vary.",
       "evidence": [
-        "frontend/src/components/sections/MachineryBlock.tsx (references '/assets/generated/husk-machine-01.dim_1200x800.png', '/assets/generated/separator-machine-01.dim_1200x800.png', '/assets/generated/packing-machine-01.dim_1200x800.png')"
+        "frontend/src/hooks/useSalarySplit.ts (\"// Fixed gross salary - immutable across all zones and modes\" and FIXED_GROSS_SALARY = '8419'; createDefaultZoneState sets grossSalary to FIXED_GROSS_SALARY; effects set grossSalary: FIXED_GROSS_SALARY)",
+        "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx (defines FIXED_GROSS = 8419 and uses it to compute amounts/percentages)",
+        "frontend-file-summaries.txt (SalarySplitCalculator described as showing \"fixed gross salary display (₹8,419)\" and \"immutable gross salary\")"
       ]
     }
   ],
-  "hallucinated_features": [],
   "confidence": 0.72,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/sections/MachineryBlock.tsx",
-    "frontend/src/components/sections/ProcessSection.tsx",
+    "frontend/src/components/salary/SalarySplitCalculator.tsx",
+    "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
+    "frontend/src/hooks/useSalarySplit.ts",
+    "frontend/src/lib/zoneDesignationBasicConfig.ts",
     "project_state.json"
   ]
 }

@@ -78,7 +78,7 @@ export function ProductsSection() {
 
         <div className="mt-12 text-center">
           <p className="text-foreground/75 mb-6 font-medium">
-            All products are available in bulk quantities with flexible packaging options
+            All products are available in bulk quantities. Packing is in a gunny bag.
           </p>
           <a
             href={PHONE_DIAL}
@@ -91,4 +91,3 @@ export function ProductsSection() {
     </section>
   );
 }
-

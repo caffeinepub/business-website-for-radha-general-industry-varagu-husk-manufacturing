@@ -1,7 +1,7 @@
 # Deployment Runbook
 
 ## Overview
-This document provides instructions for rebuilding and deploying the Radha General Industry website without modifying any source files.
+This document provides instructions for deploying the **Salary Split Calculator** application. This is a separate, standalone app and must **not** replace the Radha General Industries website app.
 
 ## Pre-Deployment Verification
 

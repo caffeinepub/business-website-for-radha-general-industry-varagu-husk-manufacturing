@@ -2,11 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-new-machinery-content-block-to-the-existing-process-section-to-showcase-the-key-machines-used-for-varagu-kodo-millet-husk-processing-e-g-husk-dehusking-machine-separator-cleaner-packaging-packing-machine-with-clear-english-titles-and-short-descriptions",
-      "featureTitle": "Add a new “Machinery” content block to the existing Process section to showcase the key machines used for varagu/kodo millet husk processing (e.g., husk/dehusking machine, separator/cleaner, packaging/packing machine) with clear English titles and short descriptions.",
+      "featureId": "feature-enforce-dearness-allowance-da-as-a-fixed-amount-of-rs-8419-across-the-salary-split-calculator-for-all-zones-and-both-calculation-modes-manual-entry-and-tamil-nadu-hotel-rule-so-da-cannot-be-changed-by-users-and-all-computations-always-use-da-8419",
+      "featureTitle": "Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and both calculation modes (Manual Entry and Tamil Nadu Hotel Rule), so DA cannot be changed by users and all computations always use DA = 8419.",
       "files": [
-        "frontend/src/components/sections/MachineryBlock.tsx",
-        "frontend/src/components/sections/ProcessSection.tsx"
+        "frontend/src/components/salary/SalarySplitCalculator.tsx",
+        "frontend/src/hooks/useSalarySplit.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -21,11 +21,13 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-apply-a-good-color-treatment-to-the-new-machinery-block-by-using-the-existing-design-tokens-primary-accent-card-border-to-create-clear-visual-hierarchy-icon-image-area-title-body-text-while-preserving-the-site-s-pure-white-page-background-requirement",
-      "featureTitle": "Apply a “good color” treatment to the new Machinery block by using the existing design tokens (primary/accent/card/border) to create clear visual hierarchy (icon/image area, title, body text) while preserving the site’s pure white page background requirement.",
+      "featureId": "feature-update-the-tamil-nadu-hotel-rule-configuration-ui-and-validation-to-match-fixed-da-behavior-so-users-are-not-asked-to-configure-da-as-a-percentage-when-da-is-a-fixed-amount-of-8419",
+      "featureTitle": "Update the Tamil Nadu Hotel Rule configuration UI and validation to match fixed DA behavior, so users are not asked to configure DA as a percentage when DA is a fixed amount of 8419.",
       "files": [
-        "frontend/src/components/sections/MachineryBlock.tsx",
-        "frontend/src/components/sections/ProcessSection.tsx"
+        "frontend/src/components/salary/SalarySplitCalculator.tsx",
+        "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
+        "frontend/src/hooks/useSalarySplit.ts",
+        "frontend/src/lib/zoneDesignationBasicConfig.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -36,24 +38,6 @@
       ],
       "testIds": [
         "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-generate-and-add-static-machinery-illustrations-photos-as-simple-clean-visuals-and-render-them-in-the-machinery-block-from-the-frontend-public-assets-directory-do-not-serve-images-from-the-backend",
-      "featureTitle": "Generate and add static machinery illustrations/photos (as simple, clean visuals) and render them in the Machinery block from the frontend public assets directory (do not serve images from the backend).",
-      "files": [
-        "frontend/src/components/sections/MachineryBlock.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
       ],
       "confidence": "high"
     }

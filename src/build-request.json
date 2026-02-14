@@ -1,89 +1,59 @@
 {
   "kind": "build_request",
-  "title": "Add a Machinery showcase for husk machine processing with improved colors",
+  "title": "Make Dearness Allowance (DA) a fixed amount of Rs 8419 for all calculations",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Add a new “Machinery” content block to the existing Process section to showcase the key machines used for varagu/kodo millet husk processing (e.g., husk/dehusking machine, separator/cleaner, packaging/packing machine) with clear English titles and short descriptions.",
+      "text": "Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and both calculation modes (Manual Entry and Tamil Nadu Hotel Rule), so DA cannot be changed by users and all computations always use DA = 8419.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "recent-messages-4"
         ],
         "quotes": [
-          "use machineries in good clor- husk machne"
+          "Da is fixed Rs 8419 for all"
         ]
       },
       "acceptanceCriteria": [
-        "The Process section includes a clearly labeled “Machinery” block visible on the page without adding a new route.",
-        "The block contains at least 3 machinery items, each with an English title and 1–2 sentence description focused on husk processing.",
-        "Layout is responsive (single column on mobile, multi-column grid on wider screens)."
+        "In Salary Split Calculator, DA is always treated as 8419 (numeric) for Zone A/B/C/D.",
+        "DA input in Manual Entry mode is read-only/disabled and displays 8419 (formatted as ₹8,419 where formatting is used).",
+        "Any attempt to update DA via UI interactions does not change DA away from 8419.",
+        "Reset actions restore DA to 8419 for the current zone.",
+        "Salary breakdown values (DA line item and 'Other') reflect DA fixed at 8419 in both Manual Entry and Tamil Nadu Hotel Rule modes."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Apply a “good color” treatment to the new Machinery block by using the existing design tokens (primary/accent/card/border) to create clear visual hierarchy (icon/image area, title, body text) while preserving the site’s pure white page background requirement.",
+      "text": "Update the Tamil Nadu Hotel Rule configuration UI and validation to match fixed DA behavior, so users are not asked to configure DA as a percentage when DA is a fixed amount of 8419.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "recent-messages-4"
         ],
         "quotes": [
-          "use machineries in good clor- husk machne"
+          "Da is fixed Rs 8419 for all"
         ]
       },
       "acceptanceCriteria": [
-        "All Machinery block containers remain on white page background (no tinted/gray section backgrounds).",
-        "Machinery cards use consistent token-based colors (e.g., primary for emphasis, subtle accent backgrounds) with readable contrast for text.",
-        "No changes introduce non-white full-bleed backgrounds or gradients."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Generate and add static machinery illustrations/photos (as simple, clean visuals) and render them in the Machinery block from the frontend public assets directory (do not serve images from the backend).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "use machineries in good clor- husk machne"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All required images are added under frontend/public/assets/generated and referenced directly by the Machinery block.",
-        "Images are displayed with appropriate alt text in English.",
-        "Build runs without missing-asset errors."
+        "Tamil Nadu Hotel Rule Configuration no longer allows editing DA as a percentage (either remove DA Percentage input or disable it and clearly indicate DA is fixed at 8419).",
+        "The rule-based calculation uses DA = 8419 and does not derive DA from a percentage of gross salary.",
+        "Any displayed formulas/help text in the TN Hotel Rule section are updated to reflect DA being a fixed amount (not a percentage).",
+        "Validation logic does not require/validate DA percentage totals for correctness if DA is fixed."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything in frontend/src/components/ui (compose instead of editing).",
-    "Respect the existing project requirement that the site background remains pure white across all sections (no tinted section backgrounds, gradients, or full-screen background images).",
-    "Backend must remain a single Motoko actor; no additional backend services."
+    "Use English for any user-facing text.",
+    "Do not edit files under frontend/src/components/ui or any frontend immutablePaths listed in SYSTEM_CONTEXT."
   ],
   "nonGoals": [
-    "Add or change backend APIs or persistence related to machinery.",
-    "Add authentication, dashboards, admin editing, or any CMS-like functionality.",
-    "Introduce third-party integrations."
+    "Do not add new authentication methods beyond Internet Identity.",
+    "Do not introduce external databases or backend services.",
+    "Do not change unrelated salary features (e.g., finalized employee workflow) unless needed to support fixed DA in the Salary Split Calculator."
   ],
   "imageRequirements": {
-    "required": [
-      "Clean flat illustration of a husk/dehusking machine with neutral background (husk-machine-01.dim_1200x800.png)",
-      "Clean flat illustration of a grain/husk separator/cleaner machine with neutral background (separator-machine-01.dim_1200x800.png)",
-      "Clean flat illustration of a packaging/packing machine with neutral background (packing-machine-01.dim_1200x800.png)"
-    ],
+    "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

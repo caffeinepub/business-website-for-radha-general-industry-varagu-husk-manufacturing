@@ -12,20 +12,14 @@ export function MachineryBlock() {
     {
       title: 'Husk Dehusking Machine',
       description: 'Advanced dehusking equipment efficiently removes varagu husk from grain while preserving material quality and minimizing waste.',
-      image: '/assets/generated/husk-machine-01.dim_1200x800.png',
-      alt: 'Husk dehusking machine for varagu processing'
+      image: '/assets/generated/husk-machine-photo-01.dim_1200x800.jpg',
+      alt: 'Industrial husk dehusking machine for varagu grain processing'
     },
     {
       title: 'Separator & Cleaner',
       description: 'High-precision separation technology cleanly divides husk from grain and removes impurities for consistent output quality.',
-      image: '/assets/generated/separator-machine-01.dim_1200x800.png',
-      alt: 'Grain and husk separator cleaning machine'
-    },
-    {
-      title: 'Packing Machine',
-      description: 'Automated packaging system ensures proper sealing and consistent weight for efficient storage and distribution of processed husk.',
-      image: '/assets/generated/packing-machine-01.dim_1200x800.png',
-      alt: 'Automated packing machine for husk packaging'
+      image: '/assets/generated/separator-machine-photo-01.dim_1200x800.jpg',
+      alt: 'Grain and husk separator cleaning equipment in operation'
     }
   ];
 

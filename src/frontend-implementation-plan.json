@@ -1,78 +1,60 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Machinery showcase block in Process section with token-based colors and static images",
+  "title": "Fix Dearness Allowance (DA) at Rs 8419 in Salary Split Calculator",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Add an in-page “Machinery” content block within the existing Process section showing key husk-processing machines with English titles and short descriptions in a responsive grid.",
+      "summary": "Force DA to a fixed Rs 8419 in Salary Split Calculator across all zones and both calculation modes, preventing any user edits and ensuring all calculations use DA = 8419.",
       "acceptanceCriteria": [
-        "The Process section includes a clearly labeled “Machinery” block visible on the page without adding a new route.",
-        "The block contains at least 3 machinery items, each with an English title and 1–2 sentence description focused on husk processing.",
-        "Layout is responsive (single column on mobile, multi-column grid on wider screens)."
+        "In Salary Split Calculator, DA is always treated as 8419 (numeric) for Zone A/B/C/D.",
+        "DA input in Manual Entry mode is read-only/disabled and displays 8419 (formatted as ₹8,419 where formatting is used).",
+        "Any attempt to update DA via UI interactions does not change DA away from 8419.",
+        "Reset actions restore DA to 8419 for the current zone.",
+        "Salary breakdown values (DA line item and 'Other') reflect DA fixed at 8419 in both Manual Entry and Tamil Nadu Hotel Rule modes."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/sections/ProcessSection.tsx",
+          "path": "frontend/src/hooks/useSalarySplit.ts",
           "operation": "modify",
-          "description": "Compose a new “Machinery” block inside the existing Process section (no new route): add a heading, intro copy, and a responsive grid rendering at least 3 machinery items (husk/dehusking machine, separator/cleaner, packing machine) with clear English titles and 1–2 sentence husk-processing descriptions."
+          "description": "Update salary split state and computations so DA is a constant 8419 across all zones/modes: make DA updates a no-op, ensure zone reset restores DA to 8419, and make calculation logic always use DA=8419 when computing breakdown and validation."
         },
         {
-          "path": "frontend/src/components/sections/MachineryBlock.tsx",
-          "operation": "create",
-          "description": "Create a reusable MachineryBlock component to render the Machinery heading + responsive machinery card grid; export it for composition within ProcessSection (ensure it is imported and rendered so it is not orphaned)."
+          "path": "frontend/src/components/salary/SalarySplitCalculator.tsx",
+          "operation": "modify",
+          "description": "Update the Salary Split Calculator UI so Manual Entry DA is displayed as disabled/read-only with value 8419, and ensure the breakdown and formula displays reflect DA as a fixed amount (not editable). Use shadcn-ui Input/Label components for disabled display and consistent styling; Verify the component's usage instructions before implementing."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Style the Machinery block using existing design tokens to create a clear visual hierarchy while keeping the overall page background pure white.",
+      "summary": "Remove/disable DA percentage configuration in Tamil Nadu Hotel Rule UI and adjust related validation/help text so TN rule calculations use a fixed DA amount of 8419.",
       "acceptanceCriteria": [
-        "All Machinery block containers remain on white page background (no tinted/gray section backgrounds).",
-        "Machinery cards use consistent token-based colors (e.g., primary for emphasis, subtle accent backgrounds) with readable contrast for text.",
-        "No changes introduce non-white full-bleed backgrounds or gradients."
+        "Tamil Nadu Hotel Rule Configuration no longer allows editing DA as a percentage (either remove DA Percentage input or disable it and clearly indicate DA is fixed at 8419).",
+        "The rule-based calculation uses DA = 8419 and does not derive DA from a percentage of gross salary.",
+        "Any displayed formulas/help text in the TN Hotel Rule section are updated to reflect DA being a fixed amount (not a percentage).",
+        "Validation logic does not require/validate DA percentage totals for correctness if DA is fixed."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/sections/MachineryBlock.tsx",
+          "path": "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
           "operation": "modify",
-          "description": "Apply token-based styling to Machinery cards and content hierarchy: keep section/container background white; use existing tokens/classes (card, border, primary, accent) for card surfaces, borders, icon/image framing, titles, and body text; ensure hover/focus states do not introduce tinted section backgrounds or gradients."
+          "description": "Revise TN Hotel Rule configuration UI to stop asking for DA percentage: remove or disable the DA Percentage input and update helper text/formula display to state DA is fixed at 8419. Use shadcn-ui Card/Input/Alert components for the updated layout; Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/sections/ProcessSection.tsx",
+          "path": "frontend/src/hooks/useSalarySplit.ts",
           "operation": "modify",
-          "description": "Ensure the new Machinery block placement and surrounding spacing aligns with existing Process section styling conventions and preserves the pure white background requirement across the full section."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Add three static machinery images under public assets and render them in the Machinery block with English alt text.",
-      "acceptanceCriteria": [
-        "All required images are added under frontend/public/assets/generated and referenced directly by the Machinery block.",
-        "Images are displayed with appropriate alt text in English.",
-        "Build runs without missing-asset errors."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/husk-machine-01.dim_1200x800.png",
-          "operation": "create",
-          "description": "Add the required static image asset: frontend/public/assets/generated/husk-machine-01.dim_1200x800.png (clean flat illustration of a husk/dehusking machine with neutral background)."
+          "description": "Adjust TN Hotel Rule mode state and validation so there is no DA percentage requirement: compute rule-based Basic from configured percentage while always using fixed DA=8419, and remove any validation that depends on Basic%+DA% totals."
         },
         {
-          "path": "frontend/public/assets/generated/separator-machine-01.dim_1200x800.png",
-          "operation": "create",
-          "description": "Add the required static image asset: frontend/public/assets/generated/separator-machine-01.dim_1200x800.png (clean flat illustration of a grain/husk separator/cleaner machine with neutral background)."
-        },
-        {
-          "path": "frontend/public/assets/generated/packing-machine-01.dim_1200x800.png",
-          "operation": "create",
-          "description": "Add the required static image asset: frontend/public/assets/generated/packing-machine-01.dim_1200x800.png (clean flat illustration of a packaging/packing machine with neutral background)."
-        },
-        {
-          "path": "frontend/src/components/sections/MachineryBlock.tsx",
+          "path": "frontend/src/components/salary/SalarySplitCalculator.tsx",
           "operation": "modify",
-          "description": "Reference the static images from the public assets directory and render them in each machinery card with appropriate English alt text; ensure image sizing/cropping is consistent and responsive, and that builds do not produce missing-asset errors."
+          "description": "Update TN Hotel Rule breakdown labels and formula text so DA is shown as a fixed amount (8419) without a percentage, and ensure the displayed explanation no longer references DA being derived from a percentage. Use shadcn-ui Tabs/Card components already in place; Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/lib/zoneDesignationBasicConfig.ts",
+          "operation": "modify",
+          "description": "Align designation-based TN rule configuration types/defaults with fixed DA behavior by removing or de-emphasizing DA percentage configuration and keeping only what is needed for Basic percentage auto-fill in TN mode."
         }
       ]
     }
