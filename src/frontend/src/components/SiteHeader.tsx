@@ -38,8 +38,8 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-background/98 backdrop-blur-md shadow-lg border-b border-border' : 'bg-background/95 backdrop-blur-sm'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ${
+        isScrolled ? 'backdrop-blur-md shadow-lg border-b border-border' : 'backdrop-blur-sm'
       }`}
     >
       <div className="container mx-auto">
@@ -96,7 +96,7 @@ export function SiteHeader() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-background border-t border-border shadow-lg">
+          <div className="md:hidden bg-white border-t border-border shadow-lg">
             <nav className="flex flex-col py-4">
               {navLinks.map((link) => (
                 <button

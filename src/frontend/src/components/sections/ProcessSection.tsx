@@ -34,7 +34,7 @@ export function ProcessSection() {
   ];
 
   return (
-    <section id="process" className="py-20 bg-muted/40">
+    <section id="process" className="py-20 bg-white">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="mb-6 text-foreground">Our Process & Capabilities</h2>
@@ -89,4 +89,3 @@ export function ProcessSection() {
     </section>
   );
 }
-

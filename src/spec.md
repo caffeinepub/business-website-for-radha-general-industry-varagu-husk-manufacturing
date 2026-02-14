@@ -1,10 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Replace the site’s orange background with a plain white background everywhere.
+**Goal:** Enforce a pure white background across the entire site, including all sections and the hero, without tinted/gray backgrounds, gradients, or full-bleed background images that make the page appear non-white.
 
 **Planned changes:**
-- Update the global background theme token(s) (e.g., the value behind `bg-background`) so light mode resolves to pure white.
-- Explicitly set the base page background to white on `body` (and, if needed, `html`/`#root`) to ensure no orange shows in any empty space outside/behind sections.
+- Set/confirm global base backgrounds to pure white for `html`, `body`, and `#root` in light mode.
+- Remove/replace any section-level tinted/gray background utility classes (e.g., muted/tinted backgrounds) so all sections render on white.
+- Update the hero section styling to eliminate any full-bleed background image/overlay/gradient so the hero background matches the site’s white background.
+- Ensure header and footer backgrounds render as white while preserving readable text contrast.
 
-**User-visible outcome:** The entire site displays a plain white page background at all scroll positions, with no orange visible behind or around content.
+**User-visible outcome:** The entire site scrolls on a consistent pure white background, including the hero, header, footer, and all content sections, with no tinted/gradient/full-bleed backgrounds affecting the page color.

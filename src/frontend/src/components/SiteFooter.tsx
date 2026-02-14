@@ -12,7 +12,7 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="bg-muted/50 border-t-2 border-border py-12">
+    <footer className="bg-white border-t-2 border-border py-12">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}

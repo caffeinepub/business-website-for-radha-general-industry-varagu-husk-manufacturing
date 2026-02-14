@@ -7,8 +7,8 @@
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-replace-the-orange-background-across-the-entire-site-with-a-plain-white-background-by-ensuring-the-global-background-theme-token-s-and-base-page-background-styles-render-pure-white-everywhere-including-areas-outside-sections-and-behind-content",
-      "title": "Replace the orange background across the entire site with a plain white background by ensuring the global background theme token(s) and base page background styles render pure white everywhere (including areas outside sections and behind content).",
+      "id": "feature-ensure-the-site-renders-a-pure-white-page-background-everywhere-including-all-sections-header-footer-areas-and-full-bleed-hero-backgrounds-with-no-section-level-tinted-gray-backgrounds-gradients-or-full-screen-background-images-that-make-the-page-appear-non-white",
+      "title": "Ensure the site renders a pure white page background everywhere, including all sections, header/footer areas, and full-bleed hero backgrounds, with no section-level tinted/gray backgrounds, gradients, or full-screen background images that make the page appear non-white.",
       "reqIds": [
         "REQ-1"
       ],
@@ -18,13 +18,12 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Replace the entire orange background with a plain white background",
+      "summary": "Set a full white background across all pages",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "gameProjectType": "none",
-  "projectName": "Replace entire orange background with plain white background",
+  "projectName": "Enforce pure white background across all pages and sections",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

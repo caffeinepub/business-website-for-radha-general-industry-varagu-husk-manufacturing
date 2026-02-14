@@ -1,26 +1,62 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Set global site background to pure white",
+  "title": "Pure white background enforcement across all site sections",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Ensure the global background theme tokens and base page background styles render pure white everywhere (including behind/around all sections and outside content).",
+      "summary": "Remove non-white section backgrounds, gradients, and full-bleed hero imagery so all pages/sections render on a pure white background (including header/footer and hero).",
       "acceptanceCriteria": [
-        "When viewing the site at any scroll position, the page background renders as plain white with no orange background visible behind/around sections.",
-        "The global background token used by Tailwind classes (e.g., `bg-background`) corresponds to pure white in light mode.",
-        "The `body` (and, if necessary, `html`/`#root`) background is explicitly styled to white so that any empty space/margins outside components do not show orange."
+        "When scrolling through the entire site, no section uses tinted backgrounds (e.g., bg-muted/*) or gradient backgrounds that visually change the page background away from white.",
+        "The hero section does not use a full-bleed background image or overlay that makes the page background appear non-white; the hero background appears white like the rest of the page.",
+        "Header and footer backgrounds appear white (no muted/tinted backgrounds) while maintaining readable text contrast.",
+        "Global base backgrounds remain white for html/body/#root in light mode."
       ],
       "file_operations": [
         {
+          "path": "frontend/src/components/sections/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Remove the full-bleed background image and gradient overlay layer so the hero renders on a white background consistent with the rest of the page; keep content layout/spacing and ensure text remains readable against white."
+        },
+        {
+          "path": "frontend/src/components/sections/AboutSection.tsx",
+          "operation": "modify",
+          "description": "Replace the section-level tinted background (bg-muted/40) with a pure white background (e.g., bg-background/bg-white) so the section does not visually tint the page."
+        },
+        {
+          "path": "frontend/src/components/sections/ProcessSection.tsx",
+          "operation": "modify",
+          "description": "Replace the section-level tinted background (bg-muted/40) with a pure white background (e.g., bg-background/bg-white) to keep the page background uniformly white while preserving internal card styling."
+        },
+        {
+          "path": "frontend/src/components/sections/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Replace the call-to-action panel gradient background (bg-gradient-to-*) with a white background treatment (e.g., bg-card/bg-background with border/shadow) so no gradients alter the perceived page background."
+        },
+        {
+          "path": "frontend/src/components/SiteFooter.tsx",
+          "operation": "modify",
+          "description": "Replace the footer tinted background (bg-muted/50) with a pure white background (bg-background/bg-white) while keeping borders/typography for readable contrast."
+        },
+        {
+          "path": "frontend/src/components/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Ensure the header background is explicitly white in both scrolled and unscrolled states (avoid any muted/tinted background tokens); keep blur/shadow behavior without introducing non-white tints."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure the top-level app wrapper/main content area does not introduce any non-white background class and remains consistent with a pure white page background throughout."
+        },
+        {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Harden global base styling so the true page canvas is always white in light mode: keep `--background` as pure white (`1 0 0`) and explicitly set `html`, `body`, and `#root` background to white (and ensure full-height behavior) to prevent any orange bleed-through in gaps/outside sections."
+          "description": "Confirm and, if needed, tighten global light-mode base styles so html/body/#root render as pure white and no global gradients/background images are applied."
         },
         {
           "path": "frontend/index.css",
           "operation": "modify",
-          "description": "Align any alternate/global Tailwind base stylesheet with the same pure-white background behavior: ensure light-mode `--background` remains pure white and add/confirm explicit `html`, `body`, and `#root` white background styling so the rendered page background cannot fall back to an orange default."
+          "description": "Confirm and, if needed, tighten global light-mode base styles so html/body/#root render as pure white and no global gradients/background images are applied (keep consistent with the active stylesheet configuration)."
         }
       ]
     }

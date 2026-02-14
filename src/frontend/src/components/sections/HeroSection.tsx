@@ -16,18 +16,7 @@ export function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20">
-      {/* Background Image with Stronger Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/assets/generated/rgi-hero.dim_1600x900.png"
-          alt="Varagu Husk Manufacturing"
-          className="w-full h-full object-cover"
-        />
-        {/* Strengthened gradient overlay for better text contrast with green theme */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background/98 via-background/94 to-background/85" />
-      </div>
-
+    <section id="home" className="relative min-h-screen flex items-center pt-20 bg-white">
       {/* Content */}
       <div className="container relative z-10 py-20">
         <div className="max-w-3xl animate-fade-in">

@@ -27,7 +27,7 @@ export function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 bg-white">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="mb-6 text-foreground">Get in Touch</h2>
@@ -64,11 +64,11 @@ export function ContactSection() {
           })}
         </div>
 
-        <div className="max-w-2xl mx-auto bg-gradient-to-br from-primary/20 to-accent/20 p-8 md:p-12 rounded-2xl border-2 border-border text-center shadow-medium">
-          <h3 className="text-2xl font-semibold mb-4 text-foreground">
+        <div className="max-w-2xl mx-auto bg-card p-8 md:p-12 rounded-2xl border-2 border-border text-center shadow-medium">
+          <h3 className="text-2xl font-semibold mb-4 text-card-foreground">
             Ready to Place an Order?
           </h3>
-          <p className="text-foreground/75 mb-6 leading-relaxed font-medium">
+          <p className="text-card-foreground/75 mb-6 leading-relaxed font-medium">
             Call us directly to discuss your requirements, get pricing information, or schedule a visit to our facility.
           </p>
           <a
@@ -83,4 +83,3 @@ export function ContactSection() {
     </section>
   );
 }
-

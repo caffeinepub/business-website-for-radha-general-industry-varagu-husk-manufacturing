@@ -25,7 +25,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-muted/40">
+    <section id="about" className="py-20 bg-white">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="mb-6 text-foreground">About Radha General Industry</h2>
@@ -69,4 +69,3 @@ export function AboutSection() {
     </section>
   );
 }
-

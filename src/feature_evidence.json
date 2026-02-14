@@ -2,11 +2,16 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-the-orange-background-across-the-entire-site-with-a-plain-white-background-by-ensuring-the-global-background-theme-token-s-and-base-page-background-styles-render-pure-white-everywhere-including-areas-outside-sections-and-behind-content",
-      "featureTitle": "Replace the orange background across the entire site with a plain white background by ensuring the global background theme token(s) and base page background styles render pure white everywhere (including areas outside sections and behind content).",
+      "featureId": "feature-ensure-the-site-renders-a-pure-white-page-background-everywhere-including-all-sections-header-footer-areas-and-full-bleed-hero-backgrounds-with-no-section-level-tinted-gray-backgrounds-gradients-or-full-screen-background-images-that-make-the-page-appear-non-white",
+      "featureTitle": "Ensure the site renders a pure white page background everywhere, including all sections, header/footer areas, and full-bleed hero backgrounds, with no section-level tinted/gray backgrounds, gradients, or full-screen background images that make the page appear non-white.",
       "files": [
-        "frontend/index.css",
-        "frontend/src/index.css"
+        "frontend/src/App.tsx",
+        "frontend/src/components/SiteFooter.tsx",
+        "frontend/src/components/SiteHeader.tsx",
+        "frontend/src/components/sections/AboutSection.tsx",
+        "frontend/src/components/sections/ContactSection.tsx",
+        "frontend/src/components/sections/HeroSection.tsx",
+        "frontend/src/components/sections/ProcessSection.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",

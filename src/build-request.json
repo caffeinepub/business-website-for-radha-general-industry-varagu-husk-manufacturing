@@ -1,36 +1,35 @@
 {
   "kind": "build_request",
-  "title": "Replace entire orange background with plain white background",
+  "title": "Enforce pure white background across all pages and sections",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Replace the orange background across the entire site with a plain white background by ensuring the global background theme token(s) and base page background styles render pure white everywhere (including areas outside sections and behind content).",
+      "text": "Ensure the site renders a pure white page background everywhere, including all sections, header/footer areas, and full-bleed hero backgrounds, with no section-level tinted/gray backgrounds, gradients, or full-screen background images that make the page appear non-white.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-1"
+          "msg-6"
         ],
         "quotes": [
-          "replace orange background to white",
-          "entire"
+          "white background in all apges"
         ]
       },
       "acceptanceCriteria": [
-        "When viewing the site at any scroll position, the page background renders as plain white with no orange background visible behind/around sections.",
-        "The global background token used by Tailwind classes (e.g., `bg-background`) corresponds to pure white in light mode.",
-        "The `body` (and, if necessary, `html`/`#root`) background is explicitly styled to white so that any empty space/margins outside components do not show orange."
+        "When scrolling through the entire site, no section uses tinted backgrounds (e.g., bg-muted/*) or gradient backgrounds that visually change the page background away from white.",
+        "The hero section does not use a full-bleed background image or overlay that makes the page background appear non-white; the hero background appears white like the rest of the page.",
+        "Header and footer backgrounds appear white (no muted/tinted backgrounds) while maintaining readable text contrast.",
+        "Global base backgrounds remain white for html/body/#root in light mode."
       ]
     }
   ],
   "constraints": [
-    "Use English for any user-facing text.",
-    "Do not modify files under frontend/src/components/ui or any immutable paths listed in SYSTEM_CONTEXT.",
-    "Keep all backend logic within the single Motoko actor (no backend work is expected for this request)."
+    "Do not modify files under frontend/src/components/ui (read-only).",
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts or frontend/src/hooks/useActor.ts or frontend/src/main.tsx (immutable paths)."
   ],
   "nonGoals": [
-    "Changing the hero background image or other generated images unless they are the source of the orange background.",
-    "Adding new pages, features, or authentication changes."
+    "Adding new pages/routes or changing site structure beyond background styling.",
+    "Implementing backend changes (no backend work required)."
   ],
   "imageRequirements": {
     "required": [],
