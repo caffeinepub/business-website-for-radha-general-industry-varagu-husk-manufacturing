@@ -1,0 +1,23 @@
+{
+  "backend/main.mo": "Defines an empty Motoko actor with no functionality.",
+  "feature_evidence.json": "Feature evidence report mapping a background-color update to specific frontend CSS files and components.",
+  "frontend-file-summaries.txt": "Text file containing prewritten summaries for various frontend files including styles, components, and deployment docs.",
+  "frontend/DEPLOYMENT.md": "Deployment guide outlining steps to rebuild and deploy the site without code changes.",
+  "frontend/index.css": "Global Tailwind CSS file defining OKLCH color tokens and enforcing pure white backgrounds on html, body, and #root.",
+  "frontend/index.html": "Basic HTML entry point with meta tags and script loader for the React app.",
+  "frontend/src/App.tsx": "Root React component assembling all major site sections between header and footer.",
+  "frontend/src/components/sections/AboutSection.tsx": "About section presenting company overview and feature cards describing strengths.",
+  "frontend/src/components/sections/ContactSection.tsx": "Contact section displaying phone, address, hours, and a call-to-action panel.",
+  "frontend/src/components/sections/HeroSection.tsx": "Renders the homepage hero with background image, marketing text, call-to-action buttons, and location info, including smooth scroll to contact.",
+  "frontend/src/components/sections/ProcessSection.tsx": "Displays a four-step process overview and a capabilities list using icons and styled cards.",
+  "frontend/src/components/sections/ProductsSection.tsx": "Shows a grid of varagu husk product types with descriptions, applications, and a contact button.",
+  "frontend/src/components/SiteFooter.tsx": "Footer component showing company info, navigation shortcuts, contact details, and attribution.",
+  "frontend/src/components/SiteHeader.tsx": "Responsive header with scroll behavior, navigation links, logo, and mobile menu handling.",
+  "frontend/src/hooks/useActor.ts": "Creates and manages an authenticated or anonymous backend actor, refreshing dependent queries when identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides context and utilities to manage Internet Identity login, stored identity loading, and authentication state.",
+  "frontend/src/index.css": "Defines Tailwind-based theme tokens, global styles, and typography for light and dark modes.",
+  "frontend/src/lib/contact.ts": "Exports the display and dialable contact phone number constants.",
+  "frontend/src/main.tsx": "Bootstraps the React app with query client and Internet Identity provider wrappers.",
+  "frontend/tailwind.config.js": "Tailwind configuration defining content paths, theme extensions for colors, spacing, animations, and enabling typography, container queries, and animation plugins.",
+  "project_state.json": "JSON metadata describing project state, existing feature for replacing orange background with white, and a pending new feature request."
+}

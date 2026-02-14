@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-replace-the-orange-background-across-the-entire-site-with-a-plain-white-background-by-ensuring-the-global-background-theme-token-s-and-base-page-background-styles-render-pure-white-everywhere-including-areas-outside-sections-and-behind-content",
+      "title": "Replace the orange background across the entire site with a plain white background by ensuring the global background theme token(s) and base page background styles render pure white everywhere (including areas outside sections and behind content).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Replace the entire orange background with a plain white background",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Replace entire orange background with plain white background",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* 
+     * Single source of truth for OKLCH theme tokens.
+     * Modern green palette with fresh lime accents and strong contrast.
+     * All colors use OKLCH format: oklch(Lightness Chroma Hue)
+     */
+    :root {
+        --radius: 0.5rem;
+        
+        /* Light mode - Fresh green palette with high contrast */
+        /* Pure white background with deep slate text */
+        --background: 1 0 0;
+        --foreground: 0.18 0.03 140;
+        
+        /* Pure white cards with dark slate text */
+        --card: 1 0 0;
+        --card-foreground: 0.18 0.03 140;
+        
+        --popover: 1 0 0;
+        --popover-foreground: 0.18 0.03 140;
+        
+        /* Rich green primary with white text */
+        --primary: 0.52 0.16 145;
+        --primary-foreground: 0.99 0.01 120;
+        
+        /* Cool slate secondary with dark text */
+        --secondary: 0.88 0.04 140;
+        --secondary-foreground: 0.22 0.03 140;
+        
+        /* Light cool gray muted with readable dark text */
+        --muted: 0.92 0.02 140;
+        --muted-foreground: 0.42 0.03 140;
+        
+        /* Fresh lime accent with dark text */
+        --accent: 0.75 0.15 130;
+        --accent-foreground: 0.18 0.03 140;
+        
+        /* Vibrant red destructive */
+        --destructive: 0.58 0.24 15;
+        --destructive-foreground: 0.99 0.01 120;
+        
+        /* Subtle borders */
+        --border: 0.88 0.03 140;
+        --input: 0.88 0.03 140;
+        --ring: 0.52 0.16 145;
+    }
+
+    .dark {
+        /* Dark mode - Deep slate with green and lime accents */
+        /* Deep slate background with bright neutral-tinted text */
+        --background: 0.14 0.03 140;
+        --foreground: 0.96 0.02 120;
+        
+        /* Slightly lighter slate cards with bright text */
+        --card: 0.19 0.03 140;
+        --card-foreground: 0.96 0.02 120;
+        
+        --popover: 0.19 0.03 140;
+        --popover-foreground: 0.96 0.02 120;
+        
+        /* Bright green primary with dark text */
+        --primary: 0.68 0.18 145;
+        --primary-foreground: 0.14 0.03 140;
+        
+        /* Medium slate secondary with light text */
+        --secondary: 0.32 0.04 140;
+        --secondary-foreground: 0.96 0.02 120;
+        
+        /* Dark muted with readable light text */
+        --muted: 0.24 0.03 140;
+        --muted-foreground: 0.72 0.03 120;
+        
+        /* Vibrant lime accent with light text */
+        --accent: 0.72 0.17 130;
+        --accent-foreground: 0.96 0.02 120;
+        
+        /* Bright red destructive */
+        --destructive: 0.62 0.26 15;
+        --destructive-foreground: 0.96 0.02 120;
+        
+        /* Subtle borders */
+        --border: 0.28 0.03 140;
+        --input: 0.28 0.03 140;
+        --ring: 0.68 0.18 145;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    /* Ensure pure white background everywhere in light mode */
+    html {
+        background-color: white;
+        min-height: 100%;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        background-color: white;
+        min-height: 100vh;
+    }
+    
+    #root {
+        background-color: white;
+        min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', 'Inter', sans-serif;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+
+    h1 {
+        @apply text-4xl md:text-5xl lg:text-6xl;
+    }
+
+    h2 {
+        @apply text-3xl md:text-4xl lg:text-5xl;
+    }
+
+    h3 {
+        @apply text-2xl md:text-3xl;
+    }
+
+    h4 {
+        @apply text-xl md:text-2xl;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');

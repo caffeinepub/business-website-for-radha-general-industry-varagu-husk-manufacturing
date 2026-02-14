@@ -1,0 +1,16 @@
+{
+  "frontend/src/index.css": "Global styles with OKLCH color palette featuring a pure white background (1 0 0), green primary and lime accent colors, with explicit white background styling on html, body, and #root elements to ensure no orange background shows through anywhere on the page.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with earthy color tokens, custom container padding, enhanced shadows, and fade-in animations for a polished industrial aesthetic.",
+  "frontend/index.html": "HTML entry point with updated meta tags and SEO-friendly title for Radha General Industry's varagu husk manufacturing business.",
+  "frontend/src/App.tsx": "Main application component that composes the site header, all content sections (hero, about, products, process, contact), and footer into a single-page layout.",
+  "frontend/src/components/SiteHeader.tsx": "Responsive header with improved text contrast, stronger background opacity, and enhanced visibility for navigation links and call-to-action button, displaying \"Radha general Industries\" as the company name.",
+  "frontend/src/components/sections/HeroSection.tsx": "Hero section with strengthened background overlay (98% opacity gradient) and improved text contrast using the new green theme, featuring \"Radha general Industries\" in the marketing paragraph.",
+  "frontend/src/components/sections/AboutSection.tsx": "About section with enhanced card borders, improved text contrast using foreground/70 opacity for body text, and stronger visual hierarchy.",
+  "frontend/src/components/sections/ProductsSection.tsx": "Products section with improved text readability through enhanced foreground contrast and medium font weights for all descriptive text.",
+  "frontend/src/components/sections/ProcessSection.tsx": "Process section with stronger card borders, improved step number visibility, and enhanced text contrast for all descriptions and capability lists.",
+  "frontend/src/components/sections/ContactSection.tsx": "Contact section with improved gradient CTA panel using green theme tokens (primary/20 and accent/20 opacity) for better text readability while maintaining visual appeal.",
+  "frontend/src/components/SiteFooter.tsx": "Footer with improved text contrast, stronger border, and enhanced link visibility using the updated color tokens, displaying \"Radha general Industries\" in branding, logo alt text, and copyright line.",
+  "frontend/src/lib/contact.ts": "Single source of truth for contact phone number with display format (+91 7348848492) and E.164 dial format (tel:+917348848492) constants.",
+  "frontend/DEPLOYMENT.md": "Deployment runbook documenting the complete process for rebuilding and deploying the current Radha General Industry website version without code changes, including pre-deployment verification, deployment steps, post-deployment checklist, and rollback procedures.",
+  "frontend/index.css": "Alternate global stylesheet with OKLCH color tokens and explicit white background styling on html, body, and #root elements to prevent any orange background from appearing in gaps or margins."
+}

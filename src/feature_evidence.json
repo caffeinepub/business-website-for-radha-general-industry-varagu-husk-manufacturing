@@ -1,0 +1,24 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-replace-the-orange-background-across-the-entire-site-with-a-plain-white-background-by-ensuring-the-global-background-theme-token-s-and-base-page-background-styles-render-pure-white-everywhere-including-areas-outside-sections-and-behind-content",
+      "featureTitle": "Replace the orange background across the entire site with a plain white background by ensuring the global background theme token(s) and base page background styles render pure white everywhere (including areas outside sections and behind content).",
+      "files": [
+        "frontend/index.css",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "build_request",
+  "title": "Replace entire orange background with plain white background",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Replace the orange background across the entire site with a plain white background by ensuring the global background theme token(s) and base page background styles render pure white everywhere (including areas outside sections and behind content).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-1"
+        ],
+        "quotes": [
+          "replace orange background to white",
+          "entire"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When viewing the site at any scroll position, the page background renders as plain white with no orange background visible behind/around sections.",
+        "The global background token used by Tailwind classes (e.g., `bg-background`) corresponds to pure white in light mode.",
+        "The `body` (and, if necessary, `html`/`#root`) background is explicitly styled to white so that any empty space/margins outside components do not show orange."
+      ]
+    }
+  ],
+  "constraints": [
+    "Use English for any user-facing text.",
+    "Do not modify files under frontend/src/components/ui or any immutable paths listed in SYSTEM_CONTEXT.",
+    "Keep all backend logic within the single Motoko actor (no backend work is expected for this request)."
+  ],
+  "nonGoals": [
+    "Changing the hero background image or other generated images unless they are the source of the orange background.",
+    "Adding new pages, features, or authentication changes."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

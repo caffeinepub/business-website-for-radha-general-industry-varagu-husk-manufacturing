@@ -1,0 +1,28 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Set global site background to pure white",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Ensure the global background theme tokens and base page background styles render pure white everywhere (including behind/around all sections and outside content).",
+      "acceptanceCriteria": [
+        "When viewing the site at any scroll position, the page background renders as plain white with no orange background visible behind/around sections.",
+        "The global background token used by Tailwind classes (e.g., `bg-background`) corresponds to pure white in light mode.",
+        "The `body` (and, if necessary, `html`/`#root`) background is explicitly styled to white so that any empty space/margins outside components do not show orange."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Harden global base styling so the true page canvas is always white in light mode: keep `--background` as pure white (`1 0 0`) and explicitly set `html`, `body`, and `#root` background to white (and ensure full-height behavior) to prevent any orange bleed-through in gaps/outside sections."
+        },
+        {
+          "path": "frontend/index.css",
+          "operation": "modify",
+          "description": "Align any alternate/global Tailwind base stylesheet with the same pure-white background behavior: ensure light-mode `--background` remains pure white and add/confirm explicit `html`, `body`, and `#root` white background styling so the rendered page background cannot fall back to an orange default."
+        }
+      ]
+    }
+  ]
+}
