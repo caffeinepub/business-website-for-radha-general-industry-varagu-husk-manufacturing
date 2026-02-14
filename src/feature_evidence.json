@@ -2,15 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-ensure-the-site-renders-a-pure-white-page-background-everywhere-including-all-sections-header-footer-areas-and-full-bleed-hero-backgrounds-with-no-section-level-tinted-gray-backgrounds-gradients-or-full-screen-background-images-that-make-the-page-appear-non-white",
-      "featureTitle": "Ensure the site renders a pure white page background everywhere, including all sections, header/footer areas, and full-bleed hero backgrounds, with no section-level tinted/gray backgrounds, gradients, or full-screen background images that make the page appear non-white.",
+      "featureId": "feature-add-a-new-machinery-content-block-to-the-existing-process-section-to-showcase-the-key-machines-used-for-varagu-kodo-millet-husk-processing-e-g-husk-dehusking-machine-separator-cleaner-packaging-packing-machine-with-clear-english-titles-and-short-descriptions",
+      "featureTitle": "Add a new “Machinery” content block to the existing Process section to showcase the key machines used for varagu/kodo millet husk processing (e.g., husk/dehusking machine, separator/cleaner, packaging/packing machine) with clear English titles and short descriptions.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/SiteFooter.tsx",
-        "frontend/src/components/SiteHeader.tsx",
-        "frontend/src/components/sections/AboutSection.tsx",
-        "frontend/src/components/sections/ContactSection.tsx",
-        "frontend/src/components/sections/HeroSection.tsx",
+        "frontend/src/components/sections/MachineryBlock.tsx",
         "frontend/src/components/sections/ProcessSection.tsx"
       ],
       "components": [
@@ -22,6 +17,43 @@
       ],
       "testIds": [
         "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-good-color-treatment-to-the-new-machinery-block-by-using-the-existing-design-tokens-primary-accent-card-border-to-create-clear-visual-hierarchy-icon-image-area-title-body-text-while-preserving-the-site-s-pure-white-page-background-requirement",
+      "featureTitle": "Apply a “good color” treatment to the new Machinery block by using the existing design tokens (primary/accent/card/border) to create clear visual hierarchy (icon/image area, title, body text) while preserving the site’s pure white page background requirement.",
+      "files": [
+        "frontend/src/components/sections/MachineryBlock.tsx",
+        "frontend/src/components/sections/ProcessSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-add-static-machinery-illustrations-photos-as-simple-clean-visuals-and-render-them-in-the-machinery-block-from-the-frontend-public-assets-directory-do-not-serve-images-from-the-backend",
+      "featureTitle": "Generate and add static machinery illustrations/photos (as simple, clean visuals) and render them in the Machinery block from the frontend public assets directory (do not serve images from the backend).",
+      "files": [
+        "frontend/src/components/sections/MachineryBlock.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
       ],
       "confidence": "high"
     }

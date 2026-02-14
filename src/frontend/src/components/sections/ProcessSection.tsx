@@ -1,4 +1,5 @@
 import { CheckCircle2, Settings, Package2, Truck } from 'lucide-react';
+import { MachineryBlock } from './MachineryBlock';
 
 export function ProcessSection() {
   const steps = [
@@ -85,6 +86,9 @@ export function ProcessSection() {
             ))}
           </div>
         </div>
+
+        {/* Machinery Block */}
+        <MachineryBlock />
       </div>
     </section>
   );

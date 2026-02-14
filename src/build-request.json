@@ -1,38 +1,89 @@
 {
   "kind": "build_request",
-  "title": "Enforce pure white background across all pages and sections",
+  "title": "Add a Machinery showcase for husk machine processing with improved colors",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Ensure the site renders a pure white page background everywhere, including all sections, header/footer areas, and full-bleed hero backgrounds, with no section-level tinted/gray backgrounds, gradients, or full-screen background images that make the page appear non-white.",
+      "text": "Add a new “Machinery” content block to the existing Process section to showcase the key machines used for varagu/kodo millet husk processing (e.g., husk/dehusking machine, separator/cleaner, packaging/packing machine) with clear English titles and short descriptions.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-6"
         ],
         "quotes": [
-          "white background in all apges"
+          "use machineries in good clor- husk machne"
         ]
       },
       "acceptanceCriteria": [
-        "When scrolling through the entire site, no section uses tinted backgrounds (e.g., bg-muted/*) or gradient backgrounds that visually change the page background away from white.",
-        "The hero section does not use a full-bleed background image or overlay that makes the page background appear non-white; the hero background appears white like the rest of the page.",
-        "Header and footer backgrounds appear white (no muted/tinted backgrounds) while maintaining readable text contrast.",
-        "Global base backgrounds remain white for html/body/#root in light mode."
+        "The Process section includes a clearly labeled “Machinery” block visible on the page without adding a new route.",
+        "The block contains at least 3 machinery items, each with an English title and 1–2 sentence description focused on husk processing.",
+        "Layout is responsive (single column on mobile, multi-column grid on wider screens)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Apply a “good color” treatment to the new Machinery block by using the existing design tokens (primary/accent/card/border) to create clear visual hierarchy (icon/image area, title, body text) while preserving the site’s pure white page background requirement.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "use machineries in good clor- husk machne"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All Machinery block containers remain on white page background (no tinted/gray section backgrounds).",
+        "Machinery cards use consistent token-based colors (e.g., primary for emphasis, subtle accent backgrounds) with readable contrast for text.",
+        "No changes introduce non-white full-bleed backgrounds or gradients."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Generate and add static machinery illustrations/photos (as simple, clean visuals) and render them in the Machinery block from the frontend public assets directory (do not serve images from the backend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "use machineries in good clor- husk machne"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All required images are added under frontend/public/assets/generated and referenced directly by the Machinery block.",
+        "Images are displayed with appropriate alt text in English.",
+        "Build runs without missing-asset errors."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under frontend/src/components/ui (read-only).",
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts or frontend/src/hooks/useActor.ts or frontend/src/main.tsx (immutable paths)."
+    "Do not modify any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything in frontend/src/components/ui (compose instead of editing).",
+    "Respect the existing project requirement that the site background remains pure white across all sections (no tinted section backgrounds, gradients, or full-screen background images).",
+    "Backend must remain a single Motoko actor; no additional backend services."
   ],
   "nonGoals": [
-    "Adding new pages/routes or changing site structure beyond background styling.",
-    "Implementing backend changes (no backend work required)."
+    "Add or change backend APIs or persistence related to machinery.",
+    "Add authentication, dashboards, admin editing, or any CMS-like functionality.",
+    "Introduce third-party integrations."
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Clean flat illustration of a husk/dehusking machine with neutral background (husk-machine-01.dim_1200x800.png)",
+      "Clean flat illustration of a grain/husk separator/cleaner machine with neutral background (separator-machine-01.dim_1200x800.png)",
+      "Clean flat illustration of a packaging/packing machine with neutral background (packing-machine-01.dim_1200x800.png)"
+    ],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

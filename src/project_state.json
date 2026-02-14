@@ -5,25 +5,35 @@
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Clean flat illustration of a husk/dehusking machine with neutral background (husk-machine-01.dim_1200x800.png)\n- Clean flat illustration of a grain/husk separator/cleaner machine with neutral background (separator-machine-01.dim_1200x800.png)\n- Clean flat illustration of a packaging/packing machine with neutral background (packing-machine-01.dim_1200x800.png)",
   "existing_features": [
     {
-      "id": "feature-ensure-the-site-renders-a-pure-white-page-background-everywhere-including-all-sections-header-footer-areas-and-full-bleed-hero-backgrounds-with-no-section-level-tinted-gray-backgrounds-gradients-or-full-screen-background-images-that-make-the-page-appear-non-white",
-      "title": "Ensure the site renders a pure white page background everywhere, including all sections, header/footer areas, and full-bleed hero backgrounds, with no section-level tinted/gray backgrounds, gradients, or full-screen background images that make the page appear non-white.",
+      "id": "feature-add-a-new-machinery-content-block-to-the-existing-process-section-to-showcase-the-key-machines-used-for-varagu-kodo-millet-husk-processing-e-g-husk-dehusking-machine-separator-cleaner-packaging-packing-machine-with-clear-english-titles-and-short-descriptions",
+      "title": "Add a new “Machinery” content block to the existing Process section to showcase the key machines used for varagu/kodo millet husk processing (e.g., husk/dehusking machine, separator/cleaner, packaging/packing machine) with clear English titles and short descriptions.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
-    }
-  ],
-  "new_feature_requests": [
+    },
     {
-      "id": "AR-1",
-      "summary": "Set a full white background across all pages",
-      "reqIds": [],
-      "status": "pending"
+      "id": "feature-apply-a-good-color-treatment-to-the-new-machinery-block-by-using-the-existing-design-tokens-primary-accent-card-border-to-create-clear-visual-hierarchy-icon-image-area-title-body-text-while-preserving-the-site-s-pure-white-page-background-requirement",
+      "title": "Apply a “good color” treatment to the new Machinery block by using the existing design tokens (primary/accent/card/border) to create clear visual hierarchy (icon/image area, title, body text) while preserving the site’s pure white page background requirement.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-add-static-machinery-illustrations-photos-as-simple-clean-visuals-and-render-them-in-the-machinery-block-from-the-frontend-public-assets-directory-do-not-serve-images-from-the-backend",
+      "title": "Generate and add static machinery illustrations/photos (as simple, clean visuals) and render them in the Machinery block from the frontend public assets directory (do not serve images from the backend).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
     }
   ],
-  "projectName": "Enforce pure white background across all pages and sections",
+  "new_feature_requests": [],
+  "projectName": "Add a Machinery showcase for husk machine processing with improved colors",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -1,62 +1,78 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Pure white background enforcement across all site sections",
+  "title": "Machinery showcase block in Process section with token-based colors and static images",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Remove non-white section backgrounds, gradients, and full-bleed hero imagery so all pages/sections render on a pure white background (including header/footer and hero).",
+      "summary": "Add an in-page “Machinery” content block within the existing Process section showing key husk-processing machines with English titles and short descriptions in a responsive grid.",
       "acceptanceCriteria": [
-        "When scrolling through the entire site, no section uses tinted backgrounds (e.g., bg-muted/*) or gradient backgrounds that visually change the page background away from white.",
-        "The hero section does not use a full-bleed background image or overlay that makes the page background appear non-white; the hero background appears white like the rest of the page.",
-        "Header and footer backgrounds appear white (no muted/tinted backgrounds) while maintaining readable text contrast.",
-        "Global base backgrounds remain white for html/body/#root in light mode."
+        "The Process section includes a clearly labeled “Machinery” block visible on the page without adding a new route.",
+        "The block contains at least 3 machinery items, each with an English title and 1–2 sentence description focused on husk processing.",
+        "Layout is responsive (single column on mobile, multi-column grid on wider screens)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/sections/HeroSection.tsx",
+          "path": "frontend/src/components/sections/ProcessSection.tsx",
           "operation": "modify",
-          "description": "Remove the full-bleed background image and gradient overlay layer so the hero renders on a white background consistent with the rest of the page; keep content layout/spacing and ensure text remains readable against white."
+          "description": "Compose a new “Machinery” block inside the existing Process section (no new route): add a heading, intro copy, and a responsive grid rendering at least 3 machinery items (husk/dehusking machine, separator/cleaner, packing machine) with clear English titles and 1–2 sentence husk-processing descriptions."
         },
         {
-          "path": "frontend/src/components/sections/AboutSection.tsx",
+          "path": "frontend/src/components/sections/MachineryBlock.tsx",
+          "operation": "create",
+          "description": "Create a reusable MachineryBlock component to render the Machinery heading + responsive machinery card grid; export it for composition within ProcessSection (ensure it is imported and rendered so it is not orphaned)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Style the Machinery block using existing design tokens to create a clear visual hierarchy while keeping the overall page background pure white.",
+      "acceptanceCriteria": [
+        "All Machinery block containers remain on white page background (no tinted/gray section backgrounds).",
+        "Machinery cards use consistent token-based colors (e.g., primary for emphasis, subtle accent backgrounds) with readable contrast for text.",
+        "No changes introduce non-white full-bleed backgrounds or gradients."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/sections/MachineryBlock.tsx",
           "operation": "modify",
-          "description": "Replace the section-level tinted background (bg-muted/40) with a pure white background (e.g., bg-background/bg-white) so the section does not visually tint the page."
+          "description": "Apply token-based styling to Machinery cards and content hierarchy: keep section/container background white; use existing tokens/classes (card, border, primary, accent) for card surfaces, borders, icon/image framing, titles, and body text; ensure hover/focus states do not introduce tinted section backgrounds or gradients."
         },
         {
           "path": "frontend/src/components/sections/ProcessSection.tsx",
           "operation": "modify",
-          "description": "Replace the section-level tinted background (bg-muted/40) with a pure white background (e.g., bg-background/bg-white) to keep the page background uniformly white while preserving internal card styling."
+          "description": "Ensure the new Machinery block placement and surrounding spacing aligns with existing Process section styling conventions and preserves the pure white background requirement across the full section."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add three static machinery images under public assets and render them in the Machinery block with English alt text.",
+      "acceptanceCriteria": [
+        "All required images are added under frontend/public/assets/generated and referenced directly by the Machinery block.",
+        "Images are displayed with appropriate alt text in English.",
+        "Build runs without missing-asset errors."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/husk-machine-01.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add the required static image asset: frontend/public/assets/generated/husk-machine-01.dim_1200x800.png (clean flat illustration of a husk/dehusking machine with neutral background)."
         },
         {
-          "path": "frontend/src/components/sections/ContactSection.tsx",
-          "operation": "modify",
-          "description": "Replace the call-to-action panel gradient background (bg-gradient-to-*) with a white background treatment (e.g., bg-card/bg-background with border/shadow) so no gradients alter the perceived page background."
+          "path": "frontend/public/assets/generated/separator-machine-01.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add the required static image asset: frontend/public/assets/generated/separator-machine-01.dim_1200x800.png (clean flat illustration of a grain/husk separator/cleaner machine with neutral background)."
         },
         {
-          "path": "frontend/src/components/SiteFooter.tsx",
-          "operation": "modify",
-          "description": "Replace the footer tinted background (bg-muted/50) with a pure white background (bg-background/bg-white) while keeping borders/typography for readable contrast."
+          "path": "frontend/public/assets/generated/packing-machine-01.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add the required static image asset: frontend/public/assets/generated/packing-machine-01.dim_1200x800.png (clean flat illustration of a packaging/packing machine with neutral background)."
         },
         {
-          "path": "frontend/src/components/SiteHeader.tsx",
+          "path": "frontend/src/components/sections/MachineryBlock.tsx",
           "operation": "modify",
-          "description": "Ensure the header background is explicitly white in both scrolled and unscrolled states (avoid any muted/tinted background tokens); keep blur/shadow behavior without introducing non-white tints."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Ensure the top-level app wrapper/main content area does not introduce any non-white background class and remains consistent with a pure white page background throughout."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Confirm and, if needed, tighten global light-mode base styles so html/body/#root render as pure white and no global gradients/background images are applied."
-        },
-        {
-          "path": "frontend/index.css",
-          "operation": "modify",
-          "description": "Confirm and, if needed, tighten global light-mode base styles so html/body/#root render as pure white and no global gradients/background images are applied (keep consistent with the active stylesheet configuration)."
+          "description": "Reference the static images from the public assets directory and render them in each machinery card with appropriate English alt text; ensure image sizing/cropping is consistent and responsive, and that builds do not produce missing-asset errors."
         }
       ]
     }

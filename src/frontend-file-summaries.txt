@@ -7,10 +7,11 @@
   "frontend/src/components/sections/HeroSection.tsx": "Hero section with pure white background (removed full-bleed image), featuring company introduction, call-to-action buttons, and location information with clean layout.",
   "frontend/src/components/sections/AboutSection.tsx": "About section with pure white background showcasing company features in cards and commitment statement with maintained visual hierarchy.",
   "frontend/src/components/sections/ProductsSection.tsx": "Products section with improved text readability through enhanced foreground contrast and medium font weights for all descriptive text.",
-  "frontend/src/components/sections/ProcessSection.tsx": "Process section with pure white background displaying four-step manufacturing process and capabilities list with card-based layout.",
+  "frontend/src/components/sections/ProcessSection.tsx": "Process section with pure white background displaying four-step manufacturing process, capabilities list, and integrated machinery showcase block with card-based layout.",
   "frontend/src/components/sections/ContactSection.tsx": "Contact section with pure white background featuring contact information cards and call-to-action panel using card styling instead of gradient background.",
   "frontend/src/components/SiteFooter.tsx": "Footer with pure white background displaying company information, quick links, contact details, and attribution with proper borders for visual separation.",
   "frontend/src/lib/contact.ts": "Single source of truth for contact phone number with display format (+91 7348848492) and E.164 dial format (tel:+917348848492) constants.",
   "frontend/DEPLOYMENT.md": "Deployment runbook documenting the complete process for rebuilding and deploying the current Radha General Industry website version without code changes, including pre-deployment verification, deployment steps, post-deployment checklist, and rollback procedures.",
-  "frontend/index.css": "Alternate global stylesheet with OKLCH color tokens and explicit white background styling on html, body, and #root elements to prevent any orange background from appearing in gaps or margins."
+  "frontend/index.css": "Alternate global stylesheet with OKLCH color tokens and explicit white background styling on html, body, and #root elements to prevent any orange background from appearing in gaps or margins.",
+  "frontend/src/components/sections/MachineryBlock.tsx": "Reusable component displaying a responsive grid of three machinery cards (dehusking, separator, packing) with images, titles, and descriptions using token-based styling on white background."
 }
