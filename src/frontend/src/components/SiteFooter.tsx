@@ -11,11 +11,11 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="bg-white border-t border-border py-8">
+    <footer className="bg-background border-t border-border py-8">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground font-medium">
-            © {currentYear} Salary Split Calculator. All rights reserved.
+            © {currentYear} Salary Calculator. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground flex items-center gap-1 font-medium">
             Built with <Heart className="h-4 w-4 text-destructive fill-destructive" /> using{' '}

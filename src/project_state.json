@@ -1,24 +1,50 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
-  "architectural_notes": [],
+  "summary": "Build an attendance-based salary calculator app for hotel/service staff using rule #4 (paid days = present days + paid leave + weekly off), including staff list, designations, salary components, deductions, and gross/net pay calculations.",
+  "architectural_notes": [
+    "Salary calculation rule: paid days = present days + paid leave + weekly off (rule #4)."
+  ],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-enforce-dearness-allowance-da-as-a-fixed-amount-of-rs-8419-across-the-salary-split-calculator-for-all-zones-and-both-calculation-modes-manual-entry-and-tamil-nadu-hotel-rule-so-da-cannot-be-changed-by-users-and-all-computations-always-use-da-8419",
-      "title": "Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and both calculation modes (Manual Entry and Tamil Nadu Hotel Rule), so DA cannot be changed by users and all computations always use DA = 8419.",
+      "id": "feature-implement-attendance-rule-4-for-final-salary-calculation-compute-paid-days-present-days-paid-leave-days-weekly-off-days-then-compute-earned-salary-monthly-gross-pay-total-days-in-month-paid-days-and-net-pay-earned-salary-salary-advance-epf-esi",
+      "title": "Implement attendance Rule #4 for final salary calculation: compute Paid Days = Present Days + Paid Leave Days + Weekly Off Days, then compute Earned Salary = (Monthly Gross Pay / Total Days in Month) × Paid Days, and Net Pay = Earned Salary − (Salary Advance + EPF + ESI).",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-update-the-tamil-nadu-hotel-rule-configuration-ui-and-validation-to-match-fixed-da-behavior-so-users-are-not-asked-to-configure-da-as-a-percentage-when-da-is-a-fixed-amount-of-8419",
-      "title": "Update the Tamil Nadu Hotel Rule configuration UI and validation to match fixed DA behavior, so users are not asked to configure DA as a percentage when DA is a fixed amount of 8419.",
+      "id": "feature-add-staff-list-employee-master-management-allow-users-to-create-view-and-select-staff-members-with-fields-staff-name-mobile-optional-designation-hotel-industry-designation-list-and-default-salary-components-basic-da-other-allowance",
+      "title": "Add staff list (employee master) management: allow users to create, view, and select staff members with fields: Staff Name, Mobile (optional), Designation (hotel industry designation list), and default salary components (Basic, DA, Other Allowance).",
       "reqIds": [
         "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-support-salary-component-entry-and-gross-pay-computation-per-staff-member-basic-da-fixed-at-8-419-by-default-and-other-allowance-compute-monthly-gross-pay-basic-da-other-allowance-and-use-this-monthly-gross-pay-in-attendance-based-earned-salary-calculations",
+      "title": "Support salary component entry and gross pay computation per staff member: Basic, DA (fixed at 8,419 by default), and Other Allowance; compute Monthly Gross Pay = Basic + DA + Other Allowance, and use this Monthly Gross Pay in attendance-based earned salary calculations.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-finalized-employees-output-to-include-a-clearly-labeled-name-column-header-and-ensure-the-employee-name-is-shown-wherever-finalized-employee-records-are-listed",
+      "title": "Update the finalized employees output to include a clearly labeled \"Name\" column header and ensure the employee name is shown wherever finalized employee records are listed.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-hospitality-payroll-ledger-visual-theme-across-the-app-warm-neutrals-emerald-accents-clear-table-styling-and-consistent-typography-without-introducing-new-product-features",
+      "title": "Apply a cohesive “hospitality payroll ledger” visual theme across the app (warm neutrals + emerald accents, clear table styling, and consistent typography), without introducing new product features.",
+      "reqIds": [
+        "REQ-6"
       ],
       "version": 1
     }
@@ -26,12 +52,21 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Set DA (Dearness Allowance) as a fixed amount of Rs 8419 for all users/employees",
+      "summary": "Attendance-based salary calculator (rule #4) with staff list, hotel designations, earnings (Basic, DA, allowances) and deductions (EPF, ESI, salary advance), producing gross pay and net pay",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Persist staff members and finalized salary records in the Motoko backend (single-actor) so that refreshing the page does not erase data.",
+      "reqIds": [
+        "REQ-5"
+      ],
       "status": "pending"
     }
   ],
-  "projectName": "Make Dearness Allowance (DA) a fixed amount of Rs 8419 for all calculations",
+  "gameProjectType": "none",
+  "projectName": "Attendance-based salary calculator for hotel staff (Rule #4: paid days = present + paid leave + weekly off)",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

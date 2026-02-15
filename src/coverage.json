@@ -1,56 +1,134 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T15:41:15.250Z",
+  "generatedAt": "2026-02-15T05:35:03.765Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 6,
+    "implemented": 5,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and both calculation modes (Manual Entry and Tamil Nadu Hotel Rule), so DA cannot be changed by users and all computations always use DA = 8419.",
+        "summary": "Implement attendance Rule #4 for final salary calculation: compute Paid Days = Present Days + Paid Leave Days + Weekly Off Days, then compute Earned Salary = (Monthly Gross Pay / Total Days in Month) × Paid Days, and Net Pay = Earned Salary − (Salary Advance + EPF + ESI).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useSalarySplit.ts",
-          "frontend/src/components/salary/SalarySplitCalculator.tsx"
+          "frontend/src/hooks/useFinalSalary.ts",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/lib/finalSalaryMessage.ts"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useSalarySplit.ts",
-          "frontend/src/components/salary/SalarySplitCalculator.tsx"
+          "frontend/src/hooks/useFinalSalary.ts",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/lib/finalSalaryMessage.ts"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Update the Tamil Nadu Hotel Rule configuration UI and validation to match fixed DA behavior, so users are not asked to configure DA as a percentage when DA is a fixed amount of 8419.",
+        "summary": "Add staff list (employee master) management: allow users to create, view, and select staff members with fields: Staff Name, Mobile (optional), Designation (hotel industry designation list), and default salary components (Basic, DA, Other Allowance).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
-          "frontend/src/hooks/useSalarySplit.ts",
-          "frontend/src/components/salary/SalarySplitCalculator.tsx",
-          "frontend/src/lib/zoneDesignationBasicConfig.ts"
+          "frontend/src/hooks/useStaffMaster.ts",
+          "frontend/src/components/staff/StaffMasterPanel.tsx",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "frontend/src/hooks/useCurrentUserProfile.ts",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
-          "frontend/src/hooks/useSalarySplit.ts",
-          "frontend/src/components/salary/SalarySplitCalculator.tsx",
-          "frontend/src/lib/zoneDesignationBasicConfig.ts"
+          "frontend/src/hooks/useStaffMaster.ts",
+          "frontend/src/components/staff/StaffMasterPanel.tsx",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "frontend/src/hooks/useCurrentUserProfile.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Support salary component entry and gross pay computation per staff member: Basic, DA (fixed at 8,419 by default), and Other Allowance; compute Monthly Gross Pay = Basic + DA + Other Allowance, and use this Monthly Gross Pay in attendance-based earned salary calculations.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useFinalSalary.ts",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useFinalSalary.ts",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Update the finalized employees output to include a clearly labeled \"Name\" column header and ensure the employee name is shown wherever finalized employee records are listed.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/lib/finalSalaryMessage.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/lib/finalSalaryMessage.ts"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Persist staff members and finalized salary records in the Motoko backend (single-actor) so that refreshing the page does not erase data.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Apply a cohesive “hospitality payroll ledger” visual theme across the app (warm neutrals + emerald accents, clear table styling, and consistent typography), without introducing new product features.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/src/components/SiteHeader.tsx",
+          "frontend/src/components/SiteFooter.tsx",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "frontend/src/components/salary/SalarySplitCalculator.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/src/components/SiteHeader.tsx",
+          "frontend/src/components/SiteFooter.tsx",
+          "frontend/src/components/salary/FinalSalaryWorkflow.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/salary/SalarySplitCalculator.tsx",
-    "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
-    "frontend/src/hooks/useSalarySplit.ts",
-    "frontend/src/lib/zoneDesignationBasicConfig.ts",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/SiteFooter.tsx",
+    "frontend/src/components/SiteHeader.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+    "frontend/src/components/staff/StaffMasterPanel.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useCurrentUserProfile.ts",
+    "frontend/src/hooks/useFinalSalary.ts",
+    "frontend/src/hooks/useStaffMaster.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/finalSalaryMessage.ts",
+    "frontend/src/utils/urlParams.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

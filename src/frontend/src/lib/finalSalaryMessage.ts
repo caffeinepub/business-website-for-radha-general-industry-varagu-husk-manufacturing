@@ -5,20 +5,24 @@ export interface FinalSalaryMessageData {
   employee: FinalSalaryEmployee;
   earnedSalary: number;
   totalDeductions: number;
-  finalPay: number;
+  netPay: number;
 }
 
 /**
  * Generate a finalized salary message for a single employee
  */
 export function generateFinalSalaryMessage(data: FinalSalaryMessageData): string {
-  const { employee, earnedSalary, totalDeductions, finalPay } = data;
+  const { employee, earnedSalary, totalDeductions, netPay } = data;
 
   const lines: string[] = [
     `Final Salary Statement`,
     ``,
-    `Employee: ${employee.name}`,
+    `Name: ${employee.name}`,
   ];
+
+  if (employee.designation) {
+    lines.push(`Designation: ${employee.designation}`);
+  }
 
   if (employee.pfNumber) {
     lines.push(`PF Number: ${employee.pfNumber}`);
@@ -30,8 +34,17 @@ export function generateFinalSalaryMessage(data: FinalSalaryMessageData): string
 
   lines.push(
     ``,
-    `Gross Salary: ${formatCurrency(employee.grossSalary)}`,
-    `Working Days: ${employee.workingDays} / ${employee.totalDaysInMonth}`,
+    `Monthly Gross Pay: ${formatCurrency(employee.monthlyGrossPay)}`,
+    `  Basic: ${formatCurrency(employee.basic)}`,
+    `  DA: ${formatCurrency(employee.da)}`,
+    `  Other Allowance: ${formatCurrency(employee.otherAllowance)}`,
+    ``,
+    `Attendance (Rule #4):`,
+    `  Present Days: ${employee.presentDays}`,
+    `  Paid Leave Days: ${employee.paidLeaveDays}`,
+    `  Weekly Off Days: ${employee.weeklyOffDays}`,
+    `  Paid Days: ${employee.paidDays} / ${employee.totalDaysInMonth}`,
+    ``,
     `Earned Salary: ${formatCurrency(earnedSalary)}`,
     ``,
     `Deductions:`,
@@ -42,17 +55,17 @@ export function generateFinalSalaryMessage(data: FinalSalaryMessageData): string
   }
 
   if (employee.pfDeduction > 0) {
-    lines.push(`  PF Deduction: ${formatCurrency(employee.pfDeduction)}`);
+    lines.push(`  EPF: ${formatCurrency(employee.pfDeduction)}`);
   }
 
   if (employee.esiDeduction > 0) {
-    lines.push(`  ESI Deduction: ${formatCurrency(employee.esiDeduction)}`);
+    lines.push(`  ESI: ${formatCurrency(employee.esiDeduction)}`);
   }
 
   lines.push(
     `  Total Deductions: ${formatCurrency(totalDeductions)}`,
     ``,
-    `Final Pay: ${formatCurrency(finalPay)}`,
+    `Net Pay: ${formatCurrency(netPay)}`,
   );
 
   return lines.join('\n');

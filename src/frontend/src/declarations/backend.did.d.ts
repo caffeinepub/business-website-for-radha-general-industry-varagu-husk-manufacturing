@@ -10,7 +10,79 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface _SERVICE { 'healthCheck' : ActorMethod<[], string> }
+export interface AttMonth {
+  'cl' : bigint,
+  'da' : number,
+  'el' : bigint,
+  'pf' : number,
+  'sl' : bigint,
+  'esi' : number,
+  'weekoff' : bigint,
+  'staffName' : string,
+  'otherAllowances' : number,
+  'salaryAdvance' : number,
+  'present' : bigint,
+  'totalDays' : bigint,
+  'grossPay' : number,
+  'absent' : bigint,
+  'basic' : number,
+  'monthYear' : string,
+}
+export interface Staff {
+  'da' : number,
+  'name' : string,
+  'designation' : string,
+  'otherAllowance' : number,
+  'basic' : number,
+  'mobile' : string,
+}
+export interface UserProfile {
+  'name' : string,
+  'email' : string,
+  'department' : string,
+}
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
+export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addStaff' : ActorMethod<
+    [string, string, string, number, number, number],
+    undefined
+  >,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'finalizeSalary' : ActorMethod<[string], undefined>,
+  'getAttMonth' : ActorMethod<[string], [] | [AttMonth]>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getNetPay' : ActorMethod<[string], number>,
+  'getStaff' : ActorMethod<[bigint, bigint], Array<Staff>>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'healthCheck' : ActorMethod<[], string>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'saveAttMonth' : ActorMethod<
+    [
+      string,
+      string,
+      bigint,
+      bigint,
+      bigint,
+      bigint,
+      bigint,
+      bigint,
+      bigint,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+    ],
+    undefined
+  >,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+}
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
 export declare const idlFactory: IDL.InterfaceFactory;

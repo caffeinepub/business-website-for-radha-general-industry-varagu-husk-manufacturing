@@ -4,109 +4,105 @@
 
 @layer base {
     /* 
-     * Single source of truth for OKLCH theme tokens.
-     * Professional finance-utility palette with teal primary and amber accents.
+     * Hospitality payroll ledger theme with warm neutrals and emerald accents.
      * All colors use OKLCH format: oklch(Lightness Chroma Hue)
      */
     :root {
         --radius: 0.5rem;
         
-        /* Light mode - Professional finance palette */
-        /* Pure white background with deep slate text */
-        --background: 1 0 0;
-        --foreground: 0.20 0.02 240;
+        /* Light mode - Warm neutral base with emerald primary */
+        /* Warm off-white background with deep charcoal text */
+        --background: 0.98 0.005 60;
+        --foreground: 0.20 0.015 30;
         
-        /* Pure white cards with dark slate text */
-        --card: 1 0 0;
-        --card-foreground: 0.20 0.02 240;
+        /* Warm white cards with dark text */
+        --card: 0.99 0.005 60;
+        --card-foreground: 0.20 0.015 30;
         
-        --popover: 1 0 0;
-        --popover-foreground: 0.20 0.02 240;
+        --popover: 0.99 0.005 60;
+        --popover-foreground: 0.20 0.015 30;
         
-        /* Professional teal primary with white text */
-        --primary: 0.50 0.12 200;
-        --primary-foreground: 0.99 0.01 200;
+        /* Emerald primary with white text */
+        --primary: 0.55 0.14 160;
+        --primary-foreground: 0.99 0.01 160;
         
-        /* Cool slate secondary with dark text */
-        --secondary: 0.90 0.02 240;
-        --secondary-foreground: 0.25 0.02 240;
+        /* Warm taupe secondary with dark text */
+        --secondary: 0.88 0.02 50;
+        --secondary-foreground: 0.25 0.015 30;
         
-        /* Light cool gray muted with readable dark text */
-        --muted: 0.94 0.01 240;
-        --muted-foreground: 0.45 0.02 240;
+        /* Light warm gray muted with readable dark text */
+        --muted: 0.92 0.01 50;
+        --muted-foreground: 0.48 0.02 30;
         
         /* Warm amber accent with dark text */
-        --accent: 0.78 0.12 70;
-        --accent-foreground: 0.20 0.02 240;
+        --accent: 0.75 0.13 65;
+        --accent-foreground: 0.20 0.015 30;
         
         /* Vibrant red destructive */
         --destructive: 0.58 0.24 15;
         --destructive-foreground: 0.99 0.01 15;
         
-        /* Subtle borders */
-        --border: 0.90 0.02 240;
-        --input: 0.90 0.02 240;
-        --ring: 0.50 0.12 200;
+        /* Subtle warm borders */
+        --border: 0.88 0.015 50;
+        --input: 0.88 0.015 50;
+        --ring: 0.55 0.14 160;
     }
 
     .dark {
-        /* Dark mode - Deep slate with teal and amber accents */
-        /* Deep slate background with bright neutral-tinted text */
-        --background: 0.15 0.02 240;
-        --foreground: 0.96 0.01 200;
+        /* Dark mode - Deep warm slate with emerald and amber accents */
+        /* Deep warm slate background with bright neutral-tinted text */
+        --background: 0.18 0.015 40;
+        --foreground: 0.95 0.01 60;
         
-        /* Slightly lighter slate cards with bright text */
-        --card: 0.20 0.02 240;
-        --card-foreground: 0.96 0.01 200;
+        /* Slightly lighter warm slate cards with bright text */
+        --card: 0.22 0.015 40;
+        --card-foreground: 0.95 0.01 60;
         
-        --popover: 0.20 0.02 240;
-        --popover-foreground: 0.96 0.01 200;
+        --popover: 0.22 0.015 40;
+        --popover-foreground: 0.95 0.01 60;
         
-        /* Bright teal primary with dark text */
-        --primary: 0.65 0.14 200;
-        --primary-foreground: 0.15 0.02 240;
+        /* Bright emerald primary with dark text */
+        --primary: 0.65 0.16 160;
+        --primary-foreground: 0.18 0.015 40;
         
-        /* Medium slate secondary with light text */
-        --secondary: 0.30 0.02 240;
-        --secondary-foreground: 0.96 0.01 200;
+        /* Medium warm slate secondary with light text */
+        --secondary: 0.32 0.02 40;
+        --secondary-foreground: 0.95 0.01 60;
         
         /* Dark muted with readable light text */
-        --muted: 0.25 0.02 240;
-        --muted-foreground: 0.70 0.02 200;
+        --muted: 0.28 0.015 40;
+        --muted-foreground: 0.68 0.02 60;
         
         /* Vibrant amber accent with light text */
-        --accent: 0.75 0.14 70;
-        --accent-foreground: 0.96 0.01 200;
+        --accent: 0.72 0.15 65;
+        --accent-foreground: 0.95 0.01 60;
         
         /* Bright red destructive */
         --destructive: 0.62 0.26 15;
-        --destructive-foreground: 0.96 0.01 15;
+        --destructive-foreground: 0.95 0.01 15;
         
-        /* Subtle borders */
-        --border: 0.28 0.02 240;
-        --input: 0.28 0.02 240;
-        --ring: 0.65 0.14 200;
+        /* Subtle warm borders */
+        --border: 0.30 0.015 40;
+        --input: 0.30 0.015 40;
+        --ring: 0.65 0.16 160;
     }
 
     * {
         @apply border-border;
     }
     
-    /* Ensure pure white background everywhere in light mode */
     html {
-        background-color: white;
+        background-color: oklch(var(--background));
         min-height: 100%;
     }
     
     body {
         @apply bg-background text-foreground;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        background-color: white;
         min-height: 100vh;
     }
     
     #root {
-        background-color: white;
         min-height: 100vh;
     }
 

@@ -8,14 +8,174 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const AttMonth = IDL.Record({
+  'cl' : IDL.Nat,
+  'da' : IDL.Float64,
+  'el' : IDL.Nat,
+  'pf' : IDL.Float64,
+  'sl' : IDL.Nat,
+  'esi' : IDL.Float64,
+  'weekoff' : IDL.Nat,
+  'staffName' : IDL.Text,
+  'otherAllowances' : IDL.Float64,
+  'salaryAdvance' : IDL.Float64,
+  'present' : IDL.Nat,
+  'totalDays' : IDL.Nat,
+  'grossPay' : IDL.Float64,
+  'absent' : IDL.Nat,
+  'basic' : IDL.Float64,
+  'monthYear' : IDL.Text,
+});
+export const UserProfile = IDL.Record({
+  'name' : IDL.Text,
+  'email' : IDL.Text,
+  'department' : IDL.Text,
+});
+export const Staff = IDL.Record({
+  'da' : IDL.Float64,
+  'name' : IDL.Text,
+  'designation' : IDL.Text,
+  'otherAllowance' : IDL.Float64,
+  'basic' : IDL.Float64,
+  'mobile' : IDL.Text,
+});
+
 export const idlService = IDL.Service({
-  'healthCheck' : IDL.Func([], [IDL.Text], []),
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addStaff' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Float64, IDL.Float64, IDL.Float64],
+      [],
+      [],
+    ),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'finalizeSalary' : IDL.Func([IDL.Text], [], []),
+  'getAttMonth' : IDL.Func([IDL.Text], [IDL.Opt(AttMonth)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getNetPay' : IDL.Func([IDL.Text], [IDL.Float64], ['query']),
+  'getStaff' : IDL.Func([IDL.Nat, IDL.Nat], [IDL.Vec(Staff)], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'healthCheck' : IDL.Func([], [IDL.Text], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'saveAttMonth' : IDL.Func(
+      [
+        IDL.Text,
+        IDL.Text,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Float64,
+        IDL.Float64,
+        IDL.Float64,
+        IDL.Float64,
+        IDL.Float64,
+        IDL.Float64,
+        IDL.Float64,
+      ],
+      [],
+      [],
+    ),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
-  return IDL.Service({ 'healthCheck' : IDL.Func([], [IDL.Text], []) });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const AttMonth = IDL.Record({
+    'cl' : IDL.Nat,
+    'da' : IDL.Float64,
+    'el' : IDL.Nat,
+    'pf' : IDL.Float64,
+    'sl' : IDL.Nat,
+    'esi' : IDL.Float64,
+    'weekoff' : IDL.Nat,
+    'staffName' : IDL.Text,
+    'otherAllowances' : IDL.Float64,
+    'salaryAdvance' : IDL.Float64,
+    'present' : IDL.Nat,
+    'totalDays' : IDL.Nat,
+    'grossPay' : IDL.Float64,
+    'absent' : IDL.Nat,
+    'basic' : IDL.Float64,
+    'monthYear' : IDL.Text,
+  });
+  const UserProfile = IDL.Record({
+    'name' : IDL.Text,
+    'email' : IDL.Text,
+    'department' : IDL.Text,
+  });
+  const Staff = IDL.Record({
+    'da' : IDL.Float64,
+    'name' : IDL.Text,
+    'designation' : IDL.Text,
+    'otherAllowance' : IDL.Float64,
+    'basic' : IDL.Float64,
+    'mobile' : IDL.Text,
+  });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addStaff' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Float64, IDL.Float64, IDL.Float64],
+        [],
+        [],
+      ),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'finalizeSalary' : IDL.Func([IDL.Text], [], []),
+    'getAttMonth' : IDL.Func([IDL.Text], [IDL.Opt(AttMonth)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getNetPay' : IDL.Func([IDL.Text], [IDL.Float64], ['query']),
+    'getStaff' : IDL.Func([IDL.Nat, IDL.Nat], [IDL.Vec(Staff)], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'healthCheck' : IDL.Func([], [IDL.Text], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'saveAttMonth' : IDL.Func(
+        [
+          IDL.Text,
+          IDL.Text,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Float64,
+          IDL.Float64,
+          IDL.Float64,
+          IDL.Float64,
+          IDL.Float64,
+          IDL.Float64,
+          IDL.Float64,
+        ],
+        [],
+        [],
+      ),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  });
 };
 
 export const init = ({ IDL }) => { return []; };

@@ -1,56 +1,130 @@
 {
   "kind": "build_request",
-  "title": "Make Dearness Allowance (DA) a fixed amount of Rs 8419 for all calculations",
+  "title": "Attendance-based salary calculator for hotel staff (Rule #4: paid days = present + paid leave + weekly off)",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and both calculation modes (Manual Entry and Tamil Nadu Hotel Rule), so DA cannot be changed by users and all computations always use DA = 8419.",
-      "target": "frontend",
+      "text": "Implement attendance Rule #4 for final salary calculation: compute Paid Days = Present Days + Paid Leave Days + Weekly Off Days, then compute Earned Salary = (Monthly Gross Pay / Total Days in Month) × Paid Days, and Net Pay = Earned Salary − (Salary Advance + EPF + ESI).",
+      "target": "both",
       "source": {
         "messageIds": [
-          "recent-messages-4"
+          "msg-1"
         ],
         "quotes": [
-          "Da is fixed Rs 8419 for all"
+          "4",
+          "satff name list creation,  add designation based on hotel industry, basic , da . other allowance epf esi , salary advance dedcution. gross pay and net pay"
         ]
       },
       "acceptanceCriteria": [
-        "In Salary Split Calculator, DA is always treated as 8419 (numeric) for Zone A/B/C/D.",
-        "DA input in Manual Entry mode is read-only/disabled and displays 8419 (formatted as ₹8,419 where formatting is used).",
-        "Any attempt to update DA via UI interactions does not change DA away from 8419.",
-        "Reset actions restore DA to 8419 for the current zone.",
-        "Salary breakdown values (DA line item and 'Other') reflect DA fixed at 8419 in both Manual Entry and Tamil Nadu Hotel Rule modes."
+        "The UI includes numeric inputs for Present Days, Paid Leave Days, and Weekly Off Days (all default to 0).",
+        "The UI displays Paid Days as a derived value and prevents Paid Days from exceeding Total Days in Month (show a clear validation error in English).",
+        "Earned Salary and Net Pay update consistently using the Rule #4 formula above.",
+        "Negative values are rejected for all attendance and deduction inputs with clear validation messages in English."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Update the Tamil Nadu Hotel Rule configuration UI and validation to match fixed DA behavior, so users are not asked to configure DA as a percentage when DA is a fixed amount of 8419.",
-      "target": "frontend",
+      "text": "Add staff list (employee master) management: allow users to create, view, and select staff members with fields: Staff Name, Mobile (optional), Designation (hotel industry designation list), and default salary components (Basic, DA, Other Allowance).",
+      "target": "both",
       "source": {
         "messageIds": [
-          "recent-messages-4"
+          "msg-1"
         ],
         "quotes": [
-          "Da is fixed Rs 8419 for all"
+          "satff name list creation,  add designation based on hotel industry, basic , da . other allowance epf esi , salary advance dedcution. gross pay and net pay"
         ]
       },
       "acceptanceCriteria": [
-        "Tamil Nadu Hotel Rule Configuration no longer allows editing DA as a percentage (either remove DA Percentage input or disable it and clearly indicate DA is fixed at 8419).",
-        "The rule-based calculation uses DA = 8419 and does not derive DA from a percentage of gross salary.",
-        "Any displayed formulas/help text in the TN Hotel Rule section are updated to reflect DA being a fixed amount (not a percentage).",
-        "Validation logic does not require/validate DA percentage totals for correctness if DA is fixed."
+        "Users can add a new staff member and see them appear in a staff list/table.",
+        "Users can select a staff member and have the salary calculator form pre-filled with that staff member’s details.",
+        "Designation selection uses the existing hotel designation list already present in the project.",
+        "All staff-management user-facing labels and validation messages are in English."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Support salary component entry and gross pay computation per staff member: Basic, DA (fixed at 8,419 by default), and Other Allowance; compute Monthly Gross Pay = Basic + DA + Other Allowance, and use this Monthly Gross Pay in attendance-based earned salary calculations.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "basic , da . other allowance ... gross pay and net pay"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The form provides inputs for Basic and Other Allowance and shows DA as fixed (default 8,419) consistent with existing app behavior.",
+        "The UI displays Monthly Gross Pay as a derived total (Basic + DA + Other Allowance).",
+        "The attendance-based Earned Salary uses the derived Monthly Gross Pay, not a separate unrelated gross input.",
+        "The UI clearly shows Gross Pay and Net Pay as separate values."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Update the finalized employees output to include a clearly labeled \"Name\" column header and ensure the employee name is shown wherever finalized employee records are listed.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "satff name list creation"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The finalized employees table has a dedicated header column labeled \"Name\" (English).",
+        "Each row shows the employee’s name under the \"Name\" column.",
+        "If no name is provided, the UI uses a consistent fallback label (e.g., \"Employee\") and still renders under the Name column."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Persist staff members and finalized salary records in the Motoko backend (single-actor) so that refreshing the page does not erase data.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "satff name list creation"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After creating staff and/or finalizing salaries, a full page refresh retains the data.",
+        "Backend exposes methods to list/create/update/delete staff entries and to list/add/delete finalized salary records.",
+        "If any stable state is introduced/changed, provide a conditional migration in backend/migration.mo so upgrades do not lose existing stable data."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a cohesive “hospitality payroll ledger” visual theme across the app (warm neutrals + emerald accents, clear table styling, and consistent typography), without introducing new product features.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "vreate salary calculator based on attendence"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is applied consistently across header, forms, summary cards, and tables.",
+        "Primary and accent colors avoid blue/purple and remain accessible (sufficient contrast).",
+        "All user-facing text remains in English."
       ]
     }
   ],
   "constraints": [
-    "Use English for any user-facing text.",
-    "Do not edit files under frontend/src/components/ui or any frontend immutablePaths listed in SYSTEM_CONTEXT."
+    "Use React + TypeScript + Tailwind + Shadcn UI components; compose existing UI components rather than editing files under frontend/src/components/ui.",
+    "Do not edit immutable hook files (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
+    "Backend must remain a single Motoko actor in backend/main.mo; only add backend/migration.mo if stable state migration is required."
   ],
   "nonGoals": [
-    "Do not add new authentication methods beyond Internet Identity.",
-    "Do not introduce external databases or backend services.",
-    "Do not change unrelated salary features (e.g., finalized employee workflow) unless needed to support fixed DA in the Salary Split Calculator."
+    "PDF import/parsing of formulas.",
+    "Third-party authentication beyond Internet Identity.",
+    "Realtime chat, push notifications, or external database integrations."
   ],
   "imageRequirements": {
     "required": [],

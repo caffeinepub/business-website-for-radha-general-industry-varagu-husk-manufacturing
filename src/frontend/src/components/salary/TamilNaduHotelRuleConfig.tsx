@@ -17,6 +17,8 @@ interface TamilNaduHotelRuleConfigProps {
   selectedDesignation: HotelDesignation | null;
   onDesignationChange: (value: string) => void;
   autoFillMessage: string;
+  grossSalary: number;
+  onGrossSalaryChange: (value: string) => void;
 }
 
 export function TamilNaduHotelRuleConfigComponent({
@@ -27,6 +29,8 @@ export function TamilNaduHotelRuleConfigComponent({
   selectedDesignation,
   onDesignationChange,
   autoFillMessage,
+  grossSalary,
+  onGrossSalaryChange,
 }: TamilNaduHotelRuleConfigProps) {
   const handleBasicPercentageChange = (value: string) => {
     const numValue = parseFloat(value);
@@ -37,19 +41,18 @@ export function TamilNaduHotelRuleConfigComponent({
 
   // Fixed DA amount
   const FIXED_DA = 8419;
-  const FIXED_GROSS = 8419;
 
-  // Calculate other percentage based on Basic percentage and fixed DA
-  const basicAmount = (FIXED_GROSS * config.basicPercentage) / 100;
-  const otherAmount = FIXED_GROSS - basicAmount - FIXED_DA;
-  const otherPercentage = (otherAmount / FIXED_GROSS) * 100;
+  // Calculate amounts based on current gross salary
+  const basicAmount = (grossSalary * config.basicPercentage) / 100;
+  const otherAmount = grossSalary - basicAmount - FIXED_DA;
+  const otherPercentage = grossSalary > 0 ? (otherAmount / grossSalary) * 100 : 0;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Tamil Nadu Hotel Rule Configuration</CardTitle>
         <CardDescription>
-          Configure the Basic percentage. DA is fixed at ₹8,419.
+          Configure the Gross Salary and Basic percentage. DA is fixed at ₹8,419.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -87,9 +90,28 @@ export function TamilNaduHotelRuleConfigComponent({
         <Alert>
           <Info className="h-4 w-4" />
           <AlertDescription>
-            DA is fixed at ₹8,419 for all zones and designations. Only Basic percentage can be configured.
+            DA is fixed at ₹8,419 for all zones and designations. Gross Salary and Basic percentage can be configured.
           </AlertDescription>
         </Alert>
+
+        <div className="space-y-2">
+          <Label htmlFor="tn-grossSalary" className="text-base font-semibold">
+            Gross Salary (Monthly)
+          </Label>
+          <Input
+            id="tn-grossSalary"
+            type="number"
+            placeholder="8419"
+            value={grossSalary || ''}
+            onChange={(e) => onGrossSalaryChange(e.target.value)}
+            className="text-lg h-12"
+            min="0"
+            step="0.01"
+          />
+          <p className="text-xs text-muted-foreground">
+            Enter the monthly gross salary amount
+          </p>
+        </div>
 
         <div className="space-y-2">
           <Label htmlFor="basicPercentage" className="text-base font-semibold">
@@ -131,7 +153,7 @@ export function TamilNaduHotelRuleConfigComponent({
           <div className="text-sm font-semibold text-foreground mb-3">Amount Breakdown</div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground">Gross Salary</span>
-            <span className="text-sm font-semibold text-foreground">{formatCurrency(FIXED_GROSS)}</span>
+            <span className="text-sm font-semibold text-foreground">{formatCurrency(grossSalary)}</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground">Basic ({config.basicPercentage}%)</span>
@@ -158,10 +180,10 @@ export function TamilNaduHotelRuleConfigComponent({
         <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
           <div className="text-sm text-muted-foreground mb-2">Formula</div>
           <div className="space-y-1 text-sm font-mono text-foreground">
-            <div>Gross Salary = ₹8,419 (Fixed)</div>
-            <div>Basic = ₹8,419 × {config.basicPercentage}%</div>
+            <div>Gross Salary = User entered amount</div>
+            <div>Basic = Gross Salary × {config.basicPercentage}%</div>
             <div>DA = ₹8,419 (Fixed)</div>
-            <div>Other = ₹8,419 - Basic - DA</div>
+            <div>Other = Gross Salary - Basic - DA</div>
           </div>
         </div>
       </CardContent>

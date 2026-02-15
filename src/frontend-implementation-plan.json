@@ -1,60 +1,158 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix Dearness Allowance (DA) at Rs 8419 in Salary Split Calculator",
+  "title": "Hospitality payroll ledger — attendance-based salary (Rule #4) with staff master",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Force DA to a fixed Rs 8419 in Salary Split Calculator across all zones and both calculation modes, preventing any user edits and ensuring all calculations use DA = 8419.",
+      "summary": "Implement Rule #4 attendance-based earned salary + net pay with derived Paid Days and validation.",
       "acceptanceCriteria": [
-        "In Salary Split Calculator, DA is always treated as 8419 (numeric) for Zone A/B/C/D.",
-        "DA input in Manual Entry mode is read-only/disabled and displays 8419 (formatted as ₹8,419 where formatting is used).",
-        "Any attempt to update DA via UI interactions does not change DA away from 8419.",
-        "Reset actions restore DA to 8419 for the current zone.",
-        "Salary breakdown values (DA line item and 'Other') reflect DA fixed at 8419 in both Manual Entry and Tamil Nadu Hotel Rule modes."
+        "The UI includes numeric inputs for Present Days, Paid Leave Days, and Weekly Off Days (all default to 0).",
+        "The UI displays Paid Days as a derived value and prevents Paid Days from exceeding Total Days in Month (show a clear validation error in English).",
+        "Earned Salary and Net Pay update consistently using the Rule #4 formula above.",
+        "Negative values are rejected for all attendance and deduction inputs with clear validation messages in English."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useSalarySplit.ts",
+          "path": "frontend/src/hooks/useFinalSalary.ts",
           "operation": "modify",
-          "description": "Update salary split state and computations so DA is a constant 8419 across all zones/modes: make DA updates a no-op, ensure zone reset restores DA to 8419, and make calculation logic always use DA=8419 when computing breakdown and validation."
+          "description": "Replace the current single \"workingDays\" model with Rule #4 fields (present, paidLeave, weeklyOff) and compute derived paidDays, earnedSalary = (monthlyGrossPay/totalDaysInMonth)*paidDays, and netPay = earnedSalary - (salaryAdvance + pf + esi). Add English validation that rejects negative values, and blocks paidDays > totalDaysInMonth with a clear error message."
         },
         {
-          "path": "frontend/src/components/salary/SalarySplitCalculator.tsx",
+          "path": "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
           "operation": "modify",
-          "description": "Update the Salary Split Calculator UI so Manual Entry DA is displayed as disabled/read-only with value 8419, and ensure the breakdown and formula displays reflect DA as a fixed amount (not editable). Use shadcn-ui Input/Label components for disabled display and consistent styling; Verify the component's usage instructions before implementing."
+          "description": "Update the final salary form UI to collect Present Days, Paid Leave Days, Weekly Off Days (defaults 0) and display derived Paid Days read-only; show validation errors using the shadcn-ui Alert component (Verify the component's usage instructions before implementing). Update summary cards and the on-screen formula text to reflect Rule #4 and Net Pay = Earned Salary − (Salary Advance + EPF + ESI)."
+        },
+        {
+          "path": "frontend/src/lib/finalSalaryMessage.ts",
+          "operation": "modify",
+          "description": "Ensure message generation uses Rule #4 values (Paid Days / Total Days, Earned Salary, and Net Pay) and that all user-facing text remains in English."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Remove/disable DA percentage configuration in Tamil Nadu Hotel Rule UI and adjust related validation/help text so TN rule calculations use a fixed DA amount of 8419.",
+      "summary": "Add staff master management UI (create/list/select) with hotel designation list and prefill into the salary calculator form.",
       "acceptanceCriteria": [
-        "Tamil Nadu Hotel Rule Configuration no longer allows editing DA as a percentage (either remove DA Percentage input or disable it and clearly indicate DA is fixed at 8419).",
-        "The rule-based calculation uses DA = 8419 and does not derive DA from a percentage of gross salary.",
-        "Any displayed formulas/help text in the TN Hotel Rule section are updated to reflect DA being a fixed amount (not a percentage).",
-        "Validation logic does not require/validate DA percentage totals for correctness if DA is fixed."
+        "Users can add a new staff member and see them appear in a staff list/table.",
+        "Users can select a staff member and have the salary calculator form pre-filled with that staff member’s details.",
+        "Designation selection uses the existing hotel designation list already present in the project.",
+        "All staff-management user-facing labels and validation messages are in English."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
-          "operation": "modify",
-          "description": "Revise TN Hotel Rule configuration UI to stop asking for DA percentage: remove or disable the DA Percentage input and update helper text/formula display to state DA is fixed at 8419. Use shadcn-ui Card/Input/Alert components for the updated layout; Verify the component's usage instructions before implementing."
+          "path": "frontend/src/hooks/useStaffMaster.ts",
+          "operation": "create",
+          "description": "Create a staff-master hook to load staff list from the backend actor and add new staff records (name, optional mobile, designation, default Basic/DA/Other Allowance). Handle loading/error states in a way that can be surfaced in the UI."
         },
         {
-          "path": "frontend/src/hooks/useSalarySplit.ts",
+          "path": "frontend/src/components/staff/StaffMasterPanel.tsx",
+          "operation": "create",
+          "description": "Add a Staff Master panel that lets users create and view staff in a table and select a staff member. Use shadcn-ui form/table primitives (e.g., Card, Input, Label, Button, Table, Select, Alert) and HOTEL_DESIGNATIONS for designation options (Verify the component's usage instructions before implementing). Ensure all labels and validation messages are in English."
+        },
+        {
+          "path": "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
           "operation": "modify",
-          "description": "Adjust TN Hotel Rule mode state and validation so there is no DA percentage requirement: compute rule-based Basic from configured percentage while always using fixed DA=8419, and remove any validation that depends on Basic%+DA% totals."
+          "description": "Wire StaffMasterPanel into the Final Salary workflow and add selection handling so choosing a staff member pre-fills the salary calculator fields (name/mobile/designation + default Basic/DA/Other Allowance) using the existing hotel designation list. Use shadcn-ui Select for staff selection if needed (Verify the component's usage instructions before implementing)."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a Login/Logout button using the existing Internet Identity hook. This supports the selected authorization component requirement to require login before showing application data. Use shadcn-ui Button styling patterns where appropriate (Verify the component's usage instructions before implementing)."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Create a first-login profile setup dialog that calls getCallerUserProfile/saveCallerUserProfile and collects at least a display name (and optional email/department per backend UserProfile type). Use shadcn-ui Dialog, Input, Label, Button, and Alert components (Verify the component's usage instructions before implementing). Ensure English text."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUserProfile.ts",
+          "operation": "create",
+          "description": "Add a React Query hook to fetch the current user profile via the backend actor and expose loading states to prevent profile-setup modal flash as described by the selected authorization component. Ensure the hook is safe when the actor is not ready."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Gate staff and salary data views behind Internet Identity login (as required by the selected authorization component). Render LoginButton prominently when unauthenticated, and show ProfileSetupDialog after login when getCallerUserProfile returns null. On logout, clear cached app data via React Query client per authorization guidance."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Support Basic/DA/Other Allowance entry per staff member and derive Monthly Gross Pay for earned salary calculations.",
+      "acceptanceCriteria": [
+        "The form provides inputs for Basic and Other Allowance and shows DA as fixed (default 8,419) consistent with existing app behavior.",
+        "The UI displays Monthly Gross Pay as a derived total (Basic + DA + Other Allowance).",
+        "The attendance-based Earned Salary uses the derived Monthly Gross Pay, not a separate unrelated gross input.",
+        "The UI clearly shows Gross Pay and Net Pay as separate values."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useFinalSalary.ts",
+          "operation": "modify",
+          "description": "Add salary component fields to the final salary form state (basic, da fixed at 8419, otherAllowance) and compute monthlyGrossPay = basic + da + otherAllowance. Ensure earned salary calculation uses monthlyGrossPay and not any legacy gross field."
+        },
+        {
+          "path": "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "operation": "modify",
+          "description": "Update the form UI to show inputs for Basic and Other Allowance and a fixed/read-only DA (8,419). Display Monthly Gross Pay as a derived value and clearly separate Gross Pay vs Net Pay in the summary using shadcn-ui Cards/Alerts (Verify the component's usage instructions before implementing)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Ensure finalized employee listings always include a clearly labeled Name column and render the employee name with fallback.",
+      "acceptanceCriteria": [
+        "The finalized employees table has a dedicated header column labeled \"Name\" (English).",
+        "Each row shows the employee’s name under the \"Name\" column.",
+        "If no name is provided, the UI uses a consistent fallback label (e.g., \"Employee\") and still renders under the Name column."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "operation": "modify",
+          "description": "Audit and enforce that the finalized employees table (and any other finalized-record listings added during REQ-1/REQ-2/REQ-3 changes) includes a \"Name\" header and always displays the employee name under it, using the consistent fallback \"Employee\" when missing."
+        },
+        {
+          "path": "frontend/src/lib/finalSalaryMessage.ts",
+          "operation": "modify",
+          "description": "Ensure any finalized employee record references in generated messages consistently include the employee name, using the same fallback label when missing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply a cohesive hospitality payroll ledger theme (warm neutrals + emerald accents) across layout, forms, cards, and tables without adding features.",
+      "acceptanceCriteria": [
+        "Theme is applied consistently across header, forms, summary cards, and tables.",
+        "Primary and accent colors avoid blue/purple and remain accessible (sufficient contrast).",
+        "All user-facing text remains in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Adjust global design tokens to a warm-neutral base with emerald primary/accent (avoiding blue/purple hues) while preserving accessibility and existing Tailwind/shadcn token wiring. Keep typography consistent and ensure tables/forms/cards inherit the updated theme cleanly."
+        },
+        {
+          "path": "frontend/src/components/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Update header styling to align with the hospitality payroll ledger theme using theme tokens (bg-background, text-foreground, border-border, primary accents) instead of hard-coded white, ensuring consistent appearance with the new palette."
+        },
+        {
+          "path": "frontend/src/components/SiteFooter.tsx",
+          "operation": "modify",
+          "description": "Update footer styling to align with the hospitality payroll ledger theme using theme tokens and consistent typography and borders; avoid introducing new product features."
+        },
+        {
+          "path": "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+          "operation": "modify",
+          "description": "Refine spacing, table readability, and summary card styling to match the new theme (warm neutrals + emerald accents) using existing Tailwind utilities and shadcn-ui components (Verify the component's usage instructions before implementing)."
         },
         {
           "path": "frontend/src/components/salary/SalarySplitCalculator.tsx",
           "operation": "modify",
-          "description": "Update TN Hotel Rule breakdown labels and formula text so DA is shown as a fixed amount (8419) without a percentage, and ensure the displayed explanation no longer references DA being derived from a percentage. Use shadcn-ui Tabs/Card components already in place; Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/lib/zoneDesignationBasicConfig.ts",
-          "operation": "modify",
-          "description": "Align designation-based TN rule configuration types/defaults with fixed DA behavior by removing or de-emphasizing DA percentage configuration and keeping only what is needed for Basic percentage auto-fill in TN mode."
+          "description": "Align the Salary Split Calculator visuals (cards, alerts, table-like breakdown blocks) with the updated hospitality ledger theme using existing Tailwind utilities and shadcn-ui components (Verify the component's usage instructions before implementing)."
         }
       ]
     }

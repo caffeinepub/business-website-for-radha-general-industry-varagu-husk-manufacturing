@@ -126,18 +126,20 @@ export function SalarySplitCalculator() {
 
                 <div className="space-y-2">
                   <Label htmlFor="grossSalary" className="text-base font-semibold">
-                    Gross Salary (Fixed)
+                    Gross Salary (Monthly)
                   </Label>
                   <Input
                     id="grossSalary"
-                    type="text"
+                    type="number"
+                    placeholder="8419"
                     value={salaryState.grossSalary}
-                    className="text-lg h-12 bg-muted/50"
-                    readOnly
-                    disabled
+                    onChange={(e) => updateGrossSalary(e.target.value)}
+                    className="text-lg h-12"
+                    min="0"
+                    step="0.01"
                   />
                   <p className="text-xs text-muted-foreground">
-                    Gross salary is fixed at ₹8,419 for all zones
+                    Enter the monthly gross salary amount
                   </p>
                 </div>
 
@@ -269,7 +271,7 @@ export function SalarySplitCalculator() {
                 <div className="p-4 bg-muted/30 rounded-lg space-y-2">
                   <div className="text-sm font-semibold text-foreground mb-2">Formula</div>
                   <div className="text-xs text-muted-foreground space-y-1">
-                    <div>Gross Salary = ₹8,419 (Fixed)</div>
+                    <div>Gross Salary = User entered amount</div>
                     <div>DA = ₹8,419 (Fixed)</div>
                     <div>Other = Gross Salary - Basic - DA</div>
                   </div>
@@ -290,6 +292,8 @@ export function SalarySplitCalculator() {
               selectedDesignation={selectedDesignation}
               onDesignationChange={handleDesignationChange}
               autoFillMessage={autoFillMessage}
+              grossSalary={parseFloat(salaryState.grossSalary) || 0}
+              onGrossSalaryChange={updateGrossSalary}
             />
 
             {/* Salary Breakdown */}
@@ -346,10 +350,10 @@ export function SalarySplitCalculator() {
                 <div className="p-4 bg-muted/30 rounded-lg space-y-2">
                   <div className="text-sm font-semibold text-foreground mb-2">Formula</div>
                   <div className="text-xs text-muted-foreground space-y-1">
-                    <div>Gross Salary = ₹8,419 (Fixed)</div>
-                    <div>Basic = ₹8,419 × {tnHotelRule.basicPercentage}%</div>
+                    <div>Gross Salary = User entered amount</div>
+                    <div>Basic = Gross Salary × {tnHotelRule.basicPercentage}%</div>
                     <div>DA = ₹8,419 (Fixed)</div>
-                    <div>Other = ₹8,419 - Basic - DA</div>
+                    <div>Other = Gross Salary - Basic - DA</div>
                   </div>
                 </div>
 

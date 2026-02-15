@@ -28,8 +28,8 @@ const DEFAULT_TN_HOTEL_RULE: TamilNaduHotelRuleConfig = {
   basicPercentage: 50,
 };
 
-// Fixed gross salary - immutable across all zones and modes
-const FIXED_GROSS_SALARY = '8419';
+// Default gross salary - editable per zone
+const DEFAULT_GROSS_SALARY = '8419';
 
 // Fixed DA - immutable across all zones and modes
 const FIXED_DA = 8419;
@@ -44,7 +44,7 @@ interface ZoneState {
 
 const createDefaultZoneState = (): ZoneState => ({
   salaryState: {
-    grossSalary: FIXED_GROSS_SALARY,
+    grossSalary: DEFAULT_GROSS_SALARY,
     basic: '',
     da: FIXED_DA.toString(),
   },
@@ -76,123 +76,84 @@ export function useSalarySplit() {
       return;
     }
 
-    const gross = parseFloat(FIXED_GROSS_SALARY);
+    const gross = parseFloat(currentZoneState.salaryState.grossSalary);
     if (!isNaN(gross) && gross > 0) {
       const autoBasic = (gross * 0.5).toFixed(2);
       
-      // Only update if different to prevent loops
+      // Only update if different to avoid infinite loops
       if (currentZoneState.salaryState.basic !== autoBasic) {
-        setZoneStates(prev => ({
+        setZoneStates((prev) => ({
           ...prev,
           [selectedZone]: {
             ...prev[selectedZone],
             salaryState: {
               ...prev[selectedZone].salaryState,
-              grossSalary: FIXED_GROSS_SALARY,
               basic: autoBasic,
-              da: FIXED_DA.toString(),
             },
           },
         }));
       }
     }
-  }, [currentZoneState.autoApplyBasic50, mode, selectedZone]);
+  }, [currentZoneState.salaryState.grossSalary, currentZoneState.autoApplyBasic50, mode, selectedZone]);
 
-  // Auto-fill logic when designation changes
-  useEffect(() => {
-    const designation = currentZoneState.selectedDesignation;
-    if (!designation) {
-      setAutoFillMessage('');
-      return;
+  const updateZoneState = (updates: Partial<ZoneState>) => {
+    setZoneStates((prev) => ({
+      ...prev,
+      [selectedZone]: {
+        ...prev[selectedZone],
+        ...updates,
+      },
+    }));
+  };
+
+  const updateSalaryState = (updates: Partial<SalaryState>) => {
+    setZoneStates((prev) => ({
+      ...prev,
+      [selectedZone]: {
+        ...prev[selectedZone],
+        salaryState: {
+          ...prev[selectedZone].salaryState,
+          ...updates,
+        },
+      },
+    }));
+  };
+
+  const calculation = useMemo((): SalaryCalculation => {
+    const gross = parseFloat(currentZoneState.salaryState.grossSalary) || 0;
+    const basic = parseFloat(currentZoneState.salaryState.basic) || 0;
+    const da = FIXED_DA; // Always use fixed DA
+
+    let calculatedBasic = basic;
+
+    // In TN Hotel Rule mode, calculate Basic from percentage
+    if (mode === 'tn-hotel-rule') {
+      calculatedBasic = (gross * currentZoneState.tnHotelRule.basicPercentage) / 100;
     }
 
-    const config = getBasicConfigForDesignation(selectedZone, designation);
-    
-    if (!config) {
-      setAutoFillMessage(
-        `No auto-fill configuration available for ${designation} in Zone ${selectedZone}. Please enter values manually.`
-      );
-      return;
-    }
+    const other = gross - calculatedBasic - da;
 
-    setAutoFillMessage('');
-
-    // Apply auto-fill based on mode
-    setZoneStates(prev => {
-      const newState = { ...prev };
-      const zoneState = { ...newState[selectedZone] };
-
-      if (mode === 'manual' && config.manualBasicAmount !== undefined) {
-        // Auto-fill Basic amount in manual mode (overrides 50% auto-apply)
-        zoneState.salaryState = {
-          ...zoneState.salaryState,
-          grossSalary: FIXED_GROSS_SALARY,
-          basic: config.manualBasicAmount.toString(),
-          da: FIXED_DA.toString(),
-        };
-        // Disable auto-apply when designation sets a specific amount
-        zoneState.autoApplyBasic50 = false;
-      } else if (mode === 'tn-hotel-rule') {
-        // Auto-fill rule percentages in TN Hotel Rule mode (DA is always fixed)
-        if (config.tnRuleBasicPercentage !== undefined) {
-          zoneState.tnHotelRule = {
-            basicPercentage: config.tnRuleBasicPercentage,
-          };
-          zoneState.salaryState = {
-            ...zoneState.salaryState,
-            grossSalary: FIXED_GROSS_SALARY,
-            da: FIXED_DA.toString(),
-          };
-        }
-      }
-
-      newState[selectedZone] = zoneState;
-      return newState;
-    });
-  }, [currentZoneState.selectedDesignation, selectedZone, mode]);
-
-  const calculation = useMemo<SalaryCalculation>(() => {
-    // Always use fixed gross salary and fixed DA
-    const gross = parseFloat(FIXED_GROSS_SALARY) || 0;
-    const da = FIXED_DA;
-
-    let basic = 0;
-
-    if (mode === 'manual') {
-      basic = parseFloat(currentZoneState.salaryState.basic) || 0;
-    } else if (mode === 'tn-hotel-rule') {
-      if (gross > 0) {
-        basic = (gross * currentZoneState.tnHotelRule.basicPercentage) / 100;
-      }
-    }
-
-    const other = gross - basic - da;
-
-    let isValid = false;
+    // Validation
+    let isValid = true;
     let errorMessage = '';
 
     if (gross <= 0) {
-      errorMessage = 'Please enter a valid gross salary';
-    } else if (gross > 0) {
-      if (basic + da > gross) {
-        errorMessage = 'Basic + DA cannot exceed Gross Salary';
-      } else if (mode === 'tn-hotel-rule') {
-        // Validate rule configuration
-        if (currentZoneState.tnHotelRule.basicPercentage < 0) {
-          errorMessage = 'Basic percentage cannot be negative';
-        } else if (basic + da > gross) {
-          errorMessage = 'Basic + DA cannot exceed Gross Salary';
-        } else {
-          isValid = true;
-        }
-      } else if (mode === 'manual') {
-        isValid = basic >= 0 && da >= 0 && other >= 0;
-      }
+      isValid = false;
+      errorMessage = 'Gross salary must be greater than 0';
+    } else if (calculatedBasic < 0) {
+      isValid = false;
+      errorMessage = 'Basic salary cannot be negative';
+    } else if (other < 0) {
+      isValid = false;
+      errorMessage = 'Other components cannot be negative. Basic + DA exceeds Gross Salary.';
+    } else if (calculatedBasic + da > gross) {
+      isValid = false;
+      errorMessage = 'Basic + DA cannot exceed Gross Salary';
     }
 
     return {
       grossSalary: gross,
-      basic,
+      basic: calculatedBasic,
       da,
       other: Math.max(0, other),
       isValid,
@@ -205,36 +166,17 @@ export function useSalarySplit() {
     setAutoFillMessage('');
   };
 
-  // Gross salary update is now a no-op (always fixed at 8419)
   const updateGrossSalary = (value: string) => {
-    // Ignore any attempts to change gross salary - it's fixed at 8419
-    return;
+    updateSalaryState({ grossSalary: value });
   };
 
   const updateBasic = (value: string) => {
-    const numValue = parseFloat(value);
-    if (value === '' || (!isNaN(numValue) && numValue >= 0)) {
-      setZoneStates(prev => ({
-        ...prev,
-        [selectedZone]: {
-          ...prev[selectedZone],
-          salaryState: {
-            ...prev[selectedZone].salaryState,
-            grossSalary: FIXED_GROSS_SALARY,
-            basic: value,
-            da: FIXED_DA.toString(),
-          },
-          // Disable auto-apply when user manually edits Basic
-          autoApplyBasic50: false,
-        },
-      }));
-    }
+    updateSalaryState({ basic: value });
   };
 
-  // DA update is now a no-op (always fixed at 8419)
   const updateDA = (value: string) => {
-    // Ignore any attempts to change DA - it's fixed at 8419
-    return;
+    // DA is fixed, this is a no-op
+    // Keep for API compatibility but don't update
   };
 
   const updateMode = (newMode: CalculationMode) => {
@@ -242,47 +184,49 @@ export function useSalarySplit() {
     setAutoFillMessage('');
   };
 
-  const updateTnHotelRule = (config: Partial<TamilNaduHotelRuleConfig>) => {
-    setZoneStates(prev => ({
-      ...prev,
-      [selectedZone]: {
-        ...prev[selectedZone],
-        salaryState: {
-          ...prev[selectedZone].salaryState,
-          grossSalary: FIXED_GROSS_SALARY,
-          da: FIXED_DA.toString(),
-        },
-        tnHotelRule: {
-          ...prev[selectedZone].tnHotelRule,
-          ...config,
-        },
+  const updateTnHotelRule = (updates: Partial<TamilNaduHotelRuleConfig>) => {
+    updateZoneState({
+      tnHotelRule: {
+        ...currentZoneState.tnHotelRule,
+        ...updates,
       },
-    }));
+    });
   };
 
   const updateDesignation = (designation: HotelDesignation | null) => {
-    setZoneStates(prev => ({
-      ...prev,
-      [selectedZone]: {
-        ...prev[selectedZone],
-        selectedDesignation: designation,
-      },
-    }));
+    updateZoneState({ selectedDesignation: designation });
+
+    if (designation) {
+      const config = getBasicConfigForDesignation(selectedZone, designation);
+
+      if (config) {
+        if (mode === 'manual') {
+          // In manual mode, auto-fill Basic amount only
+          if (config.manualBasicAmount !== undefined && config.manualBasicAmount !== null) {
+            updateSalaryState({ basic: config.manualBasicAmount.toString() });
+            setAutoFillMessage(`Basic auto-filled to ₹${config.manualBasicAmount} for ${designation} in Zone ${selectedZone}`);
+          }
+        } else if (mode === 'tn-hotel-rule') {
+          // In TN Hotel Rule mode, auto-fill Basic percentage only
+          if (config.tnRuleBasicPercentage !== undefined && config.tnRuleBasicPercentage !== null) {
+            updateTnHotelRule({ basicPercentage: config.tnRuleBasicPercentage });
+            setAutoFillMessage(`Basic percentage auto-filled to ${config.tnRuleBasicPercentage}% for ${designation} in Zone ${selectedZone}`);
+          }
+        }
+
+        setTimeout(() => setAutoFillMessage(''), 5000);
+      }
+    } else {
+      setAutoFillMessage('');
+    }
   };
 
   const toggleAutoApplyBasic50 = () => {
-    setZoneStates(prev => ({
-      ...prev,
-      [selectedZone]: {
-        ...prev[selectedZone],
-        autoApplyBasic50: !prev[selectedZone].autoApplyBasic50,
-      },
-    }));
+    updateZoneState({ autoApplyBasic50: !currentZoneState.autoApplyBasic50 });
   };
 
   const reset = () => {
-    // Reset only the current zone, always restoring fixed gross salary and DA
-    setZoneStates(prev => ({
+    setZoneStates((prev) => ({
       ...prev,
       [selectedZone]: createDefaultZoneState(),
     }));
@@ -291,11 +235,7 @@ export function useSalarySplit() {
 
   return {
     selectedZone,
-    salaryState: {
-      ...currentZoneState.salaryState,
-      grossSalary: FIXED_GROSS_SALARY, // Always return fixed gross salary
-      da: FIXED_DA.toString(), // Always return fixed DA
-    },
+    salaryState: currentZoneState.salaryState,
     calculation,
     mode,
     tnHotelRule: currentZoneState.tnHotelRule,

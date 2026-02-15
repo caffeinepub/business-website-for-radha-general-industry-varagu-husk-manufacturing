@@ -6,8 +6,15 @@ export interface FinalSalaryEmployee {
   mobile: string;
   pfNumber: string;
   esiNumber: string;
-  grossSalary: number;
-  workingDays: number;
+  designation: string;
+  basic: number;
+  da: number;
+  otherAllowance: number;
+  monthlyGrossPay: number;
+  presentDays: number;
+  paidLeaveDays: number;
+  weeklyOffDays: number;
+  paidDays: number;
   totalDaysInMonth: number;
   salaryAdvance: number;
   pfDeduction: number;
@@ -18,7 +25,8 @@ export interface FinalSalaryEmployee {
 export interface FinalSalaryCalculation {
   earnedSalary: number;
   totalDeductions: number;
-  finalPay: number;
+  netPay: number;
+  paidDays: number;
   isValid: boolean;
   errorMessage: string;
 }
@@ -28,15 +36,20 @@ interface FinalSalaryFormState {
   mobile: string;
   pfNumber: string;
   esiNumber: string;
-  grossSalary: string;
-  workingDays: string;
+  designation: string;
+  basic: string;
+  da: string;
+  otherAllowance: string;
+  presentDays: string;
+  paidLeaveDays: string;
+  weeklyOffDays: string;
   totalDaysInMonth: string;
   salaryAdvance: string;
   pfDeduction: string;
   esiDeduction: string;
 }
 
-const DEFAULT_GROSS_SALARY = '8419';
+const DEFAULT_DA = '8419';
 const DEFAULT_TOTAL_DAYS = '30';
 
 const createDefaultFormState = (): FinalSalaryFormState => ({
@@ -44,8 +57,13 @@ const createDefaultFormState = (): FinalSalaryFormState => ({
   mobile: '',
   pfNumber: '',
   esiNumber: '',
-  grossSalary: DEFAULT_GROSS_SALARY,
-  workingDays: '',
+  designation: '',
+  basic: '0',
+  da: DEFAULT_DA,
+  otherAllowance: '0',
+  presentDays: '0',
+  paidLeaveDays: '0',
+  weeklyOffDays: '0',
   totalDaysInMonth: DEFAULT_TOTAL_DAYS,
   salaryAdvance: '0',
   pfDeduction: '0',
@@ -58,8 +76,16 @@ export function useFinalSalary() {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(null);
 
   const calculation = useMemo<FinalSalaryCalculation>(() => {
-    const gross = parseFloat(formState.grossSalary) || 0;
-    const workingDays = parseFloat(formState.workingDays) || 0;
+    const basic = parseFloat(formState.basic) || 0;
+    const da = parseFloat(formState.da) || 0;
+    const otherAllowance = parseFloat(formState.otherAllowance) || 0;
+    const monthlyGrossPay = basic + da + otherAllowance;
+
+    const presentDays = parseFloat(formState.presentDays) || 0;
+    const paidLeaveDays = parseFloat(formState.paidLeaveDays) || 0;
+    const weeklyOffDays = parseFloat(formState.weeklyOffDays) || 0;
+    const paidDays = presentDays + paidLeaveDays + weeklyOffDays;
+
     const totalDays = parseFloat(formState.totalDaysInMonth) || 30;
     const advance = parseFloat(formState.salaryAdvance) || 0;
     const pf = parseFloat(formState.pfDeduction) || 0;
@@ -67,7 +93,7 @@ export function useFinalSalary() {
 
     let earnedSalary = 0;
     let totalDeductions = 0;
-    let finalPay = 0;
+    let netPay = 0;
     let isValid = false;
     let errorMessage = '';
 
@@ -76,24 +102,24 @@ export function useFinalSalary() {
       errorMessage = 'Mobile number is required for messaging';
     } else if (!/^\d{10}$/.test(formState.mobile.replace(/\s/g, ''))) {
       errorMessage = 'Please enter a valid 10-digit mobile number';
-    } else if (gross <= 0) {
-      errorMessage = 'Gross salary must be greater than zero';
-    } else if (workingDays <= 0) {
-      errorMessage = 'Working days must be greater than zero';
-    } else if (workingDays > totalDays) {
-      errorMessage = 'Working days cannot exceed total days in month';
+    } else if (presentDays < 0 || paidLeaveDays < 0 || weeklyOffDays < 0) {
+      errorMessage = 'Attendance values cannot be negative';
+    } else if (paidDays > totalDays) {
+      errorMessage = 'Paid Days cannot exceed Total Days in Month';
     } else if (totalDays <= 0) {
       errorMessage = 'Total days in month must be greater than zero';
     } else if (advance < 0 || pf < 0 || esi < 0) {
       errorMessage = 'Deductions and advance cannot be negative';
+    } else if (monthlyGrossPay <= 0) {
+      errorMessage = 'Monthly Gross Pay must be greater than zero';
     } else {
-      // Calculate earned salary based on working days
-      earnedSalary = (gross / totalDays) * workingDays;
+      // Calculate earned salary based on Rule #4: Present + Paid Leave + Weekly Off
+      earnedSalary = (monthlyGrossPay / totalDays) * paidDays;
       totalDeductions = advance + pf + esi;
-      finalPay = earnedSalary - totalDeductions;
+      netPay = earnedSalary - totalDeductions;
 
-      if (finalPay < 0) {
-        errorMessage = 'Final pay cannot be negative. Please check deductions and advance.';
+      if (netPay < 0) {
+        errorMessage = 'Net Pay cannot be negative. Please check deductions and advance.';
       } else {
         isValid = true;
       }
@@ -102,7 +128,8 @@ export function useFinalSalary() {
     return {
       earnedSalary,
       totalDeductions,
-      finalPay,
+      netPay,
+      paidDays,
       isValid,
       errorMessage,
     };
@@ -112,6 +139,25 @@ export function useFinalSalary() {
     setFormState(prev => ({
       ...prev,
       [field]: value,
+    }));
+  };
+
+  const prefillFromStaff = (staff: {
+    name: string;
+    mobile: string;
+    designation: string;
+    basic: number;
+    da: number;
+    otherAllowance: number;
+  }) => {
+    setFormState(prev => ({
+      ...prev,
+      name: staff.name,
+      mobile: staff.mobile,
+      designation: staff.designation,
+      basic: staff.basic.toString(),
+      da: staff.da.toString(),
+      otherAllowance: staff.otherAllowance.toString(),
     }));
   };
 
@@ -126,8 +172,15 @@ export function useFinalSalary() {
       mobile: formState.mobile.replace(/\s/g, ''),
       pfNumber: formState.pfNumber.trim(),
       esiNumber: formState.esiNumber.trim(),
-      grossSalary: parseFloat(formState.grossSalary),
-      workingDays: parseFloat(formState.workingDays),
+      designation: formState.designation,
+      basic: parseFloat(formState.basic),
+      da: parseFloat(formState.da),
+      otherAllowance: parseFloat(formState.otherAllowance),
+      monthlyGrossPay: parseFloat(formState.basic) + parseFloat(formState.da) + parseFloat(formState.otherAllowance),
+      presentDays: parseFloat(formState.presentDays),
+      paidLeaveDays: parseFloat(formState.paidLeaveDays),
+      weeklyOffDays: parseFloat(formState.weeklyOffDays),
+      paidDays: calculation.paidDays,
       totalDaysInMonth: parseFloat(formState.totalDaysInMonth),
       salaryAdvance: parseFloat(formState.salaryAdvance),
       pfDeduction: parseFloat(formState.pfDeduction),
@@ -166,6 +219,7 @@ export function useFinalSalary() {
     finalizedEmployees,
     selectedEmployeeId,
     updateField,
+    prefillFromStaff,
     finalizeEmployee,
     resetForm,
     deleteEmployee,

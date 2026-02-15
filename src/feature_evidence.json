@@ -2,18 +2,20 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-enforce-dearness-allowance-da-as-a-fixed-amount-of-rs-8419-across-the-salary-split-calculator-for-all-zones-and-both-calculation-modes-manual-entry-and-tamil-nadu-hotel-rule-so-da-cannot-be-changed-by-users-and-all-computations-always-use-da-8419",
-      "featureTitle": "Enforce Dearness Allowance (DA) as a fixed amount of Rs 8419 across the Salary Split Calculator for all zones and both calculation modes (Manual Entry and Tamil Nadu Hotel Rule), so DA cannot be changed by users and all computations always use DA = 8419.",
+      "featureId": "feature-implement-attendance-rule-4-for-final-salary-calculation-compute-paid-days-present-days-paid-leave-days-weekly-off-days-then-compute-earned-salary-monthly-gross-pay-total-days-in-month-paid-days-and-net-pay-earned-salary-salary-advance-epf-esi",
+      "featureTitle": "Implement attendance Rule #4 for final salary calculation: compute Paid Days = Present Days + Paid Leave Days + Weekly Off Days, then compute Earned Salary = (Monthly Gross Pay / Total Days in Month) × Paid Days, and Net Pay = Earned Salary − (Salary Advance + EPF + ESI).",
       "files": [
-        "frontend/src/components/salary/SalarySplitCalculator.tsx",
-        "frontend/src/hooks/useSalarySplit.ts"
+        "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+        "frontend/src/hooks/useFinalSalary.ts",
+        "frontend/src/lib/finalSalaryMessage.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-1"
@@ -21,23 +23,89 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-tamil-nadu-hotel-rule-configuration-ui-and-validation-to-match-fixed-da-behavior-so-users-are-not-asked-to-configure-da-as-a-percentage-when-da-is-a-fixed-amount-of-8419",
-      "featureTitle": "Update the Tamil Nadu Hotel Rule configuration UI and validation to match fixed DA behavior, so users are not asked to configure DA as a percentage when DA is a fixed amount of 8419.",
+      "featureId": "feature-add-staff-list-employee-master-management-allow-users-to-create-view-and-select-staff-members-with-fields-staff-name-mobile-optional-designation-hotel-industry-designation-list-and-default-salary-components-basic-da-other-allowance",
+      "featureTitle": "Add staff list (employee master) management: allow users to create, view, and select staff members with fields: Staff Name, Mobile (optional), Designation (hotel industry designation list), and default salary components (Basic, DA, Other Allowance).",
       "files": [
-        "frontend/src/components/salary/SalarySplitCalculator.tsx",
-        "frontend/src/components/salary/TamilNaduHotelRuleConfig.tsx",
-        "frontend/src/hooks/useSalarySplit.ts",
-        "frontend/src/lib/zoneDesignationBasicConfig.ts"
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+        "frontend/src/components/staff/StaffMasterPanel.tsx",
+        "frontend/src/hooks/useCurrentUserProfile.ts",
+        "frontend/src/hooks/useStaffMaster.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-support-salary-component-entry-and-gross-pay-computation-per-staff-member-basic-da-fixed-at-8-419-by-default-and-other-allowance-compute-monthly-gross-pay-basic-da-other-allowance-and-use-this-monthly-gross-pay-in-attendance-based-earned-salary-calculations",
+      "featureTitle": "Support salary component entry and gross pay computation per staff member: Basic, DA (fixed at 8,419 by default), and Other Allowance; compute Monthly Gross Pay = Basic + DA + Other Allowance, and use this Monthly Gross Pay in attendance-based earned salary calculations.",
+      "files": [
+        "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+        "frontend/src/hooks/useFinalSalary.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-finalized-employees-output-to-include-a-clearly-labeled-name-column-header-and-ensure-the-employee-name-is-shown-wherever-finalized-employee-records-are-listed",
+      "featureTitle": "Update the finalized employees output to include a clearly labeled \"Name\" column header and ensure the employee name is shown wherever finalized employee records are listed.",
+      "files": [
+        "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+        "frontend/src/lib/finalSalaryMessage.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-cohesive-hospitality-payroll-ledger-visual-theme-across-the-app-warm-neutrals-emerald-accents-clear-table-styling-and-consistent-typography-without-introducing-new-product-features",
+      "featureTitle": "Apply a cohesive “hospitality payroll ledger” visual theme across the app (warm neutrals + emerald accents, clear table styling, and consistent typography), without introducing new product features.",
+      "files": [
+        "frontend/src/components/SiteFooter.tsx",
+        "frontend/src/components/SiteHeader.tsx",
+        "frontend/src/components/salary/FinalSalaryWorkflow.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
       ],
       "confidence": "high"
     }
